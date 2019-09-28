@@ -1,5 +1,6 @@
 package VolunteerAppProject;
 
+import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
 import VolunteerAppProject.Servlets.TestServlet;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -22,6 +23,9 @@ public class ServerStarter {
 
         ServletContextHandler getFileHandler = new ServletContextHandler(server, "/test");
         getFileHandler.addServlet(TestServlet.class, "/");
+
+        ServletContextHandler getActualEventsHandler = new ServletContextHandler(server, "/api/events/getActualEvents");
+        getActualEventsHandler.addServlet(GetActualEventsServlet.class, "/");
 
         ServletContextHandler getRatingHandler = new ServletContextHandler(server, "/api/user/getRating");
         getRatingHandler.addServlet(GetRatingServlet.class, "/");
