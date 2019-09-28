@@ -110,21 +110,22 @@ public class DataBase {
         prepareString(preparedStatement, second_name, 3);
         prepareString(preparedStatement, birthday, 4);
         prepareInt(preparedStatement, sex, 5);
-        prepareString(preparedStatement, email, 6);
-        prepareString(preparedStatement, phone, 7);
-        prepareString(preparedStatement, occupation, 8);
-        prepareString(preparedStatement, langs, 9);
-        prepareString(preparedStatement, volunteer_experience, 10);
-        prepareString(preparedStatement, children_work_experience, 11);
-        prepareString(preparedStatement, skills, 12);
-        prepareString(preparedStatement, expectations, 13);
-        prepareString(preparedStatement, medical_contraindications, 14);
-        prepareString(preparedStatement, specialty, 15);
-        prepareString(preparedStatement, food_preferences, 16);
-        prepareString(preparedStatement, clothes_size, 17);
-        prepareString(preparedStatement, information_source, 18);
-        prepareString(preparedStatement, email, 19);
-        prepareBool(preparedStatement, mailing_agreement, 20);
+        prepareDouble(preparedStatement, null, 6);
+        prepareString(preparedStatement, email, 7);
+        prepareString(preparedStatement, phone, 8);
+        prepareString(preparedStatement, occupation, 9);
+        prepareString(preparedStatement, langs, 10);
+        prepareString(preparedStatement, volunteer_experience, 11);
+        prepareString(preparedStatement, children_work_experience, 12);
+        prepareString(preparedStatement, skills, 13);
+        prepareString(preparedStatement, expectations, 14);
+        prepareString(preparedStatement, medical_contraindications, 15);
+        prepareString(preparedStatement, specialty, 16);
+        prepareString(preparedStatement, food_preferences, 17);
+        prepareString(preparedStatement, clothes_size, 18);
+        prepareString(preparedStatement, information_source, 19);
+        prepareString(preparedStatement, email, 20);
+        prepareBool(preparedStatement, mailing_agreement, 21);
 
         return insertContent(preparedStatement);
     }
@@ -180,6 +181,18 @@ public class DataBase {
     private void prepareInt(PreparedStatement preparedStatement, int content, int contentIndex){
         try {
             preparedStatement.setInt(contentIndex, content);
+        } catch (SQLException e) {
+            System.out.println("In query int \"" + content + "\" error");
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("preparedStatement null");
+            e.printStackTrace();
+        }
+    }
+
+    private void prepareDouble(PreparedStatement preparedStatement, Double content, int contentIndex){
+        try {
+            preparedStatement.setDouble(contentIndex, content);
         } catch (SQLException e) {
             System.out.println("In query int \"" + content + "\" error");
             e.printStackTrace();

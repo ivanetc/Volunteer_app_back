@@ -26,6 +26,7 @@ public class DatabaseCreator {
             "    second_name TEXT,\n" +
             "    birthday TEXT,\n" +
             "    sex TEXT,\n" +
+            "    rating DOUBLE,\n" +
             "    email TEXT,\n" +
             "    phone TEXT,\n" +
             "    occupation TEXT,\n" +
