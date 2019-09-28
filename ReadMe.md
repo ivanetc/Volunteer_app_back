@@ -112,16 +112,23 @@
 **id**: id мероприятия в нашей базе
 
 #### Return
-`[
-    { 
-      "event_id" : 126
-      "vk_id" : "546785",
-      "is_open_to_apply" : "true",
-      "is_user_applied" : "true",
-      "organizer_id" : "127845",
-      "manager_id" : "145785"
-    }
-]`
+
+`{ 
+    "vk_id":"124678",  
+    
+    "name":"Название мероприятия с сервера",
+    
+    "description":"Описание мероприятия с сервера",
+    
+    "date":"29.09.19 12.00",
+    
+    "volunteers_task":"Задачи для волонтеров. \n ТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачи",
+    
+    "volunteer_requirements": "Требования к волонтерам. \n ТекстТребованийТекстТребованийТекст",
+    
+    "place":"Место проведения. Прям адрес. Прям такой длинный-длинный адрес","time_periods":[{"time_period":"27.09.19 14.30 - 18.00","is_applied":"true"},{"time_period":"27.09.19 18.00 - 29.09.19 12.00","is_applied":"false"},{"time_period":"29.09.19 12.00 - 16.00","is_applied":"true"}]
+}
+`
 
 ### POST: /api/events/ApplyForEvent
 #### Params:
