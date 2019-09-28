@@ -22,7 +22,8 @@ public class BotRequestHandler {
     public void handle(int userId) {
         try {
             apiClient.messages().send(actor).message("Hello my friend!").userId(userId).randomId(random.nextInt()).execute();
-        } catch (ApiException | ClientException ignored) {
+        } catch (ApiException | ClientException e) {
+            e.printStackTrace();
         }
     }
 }

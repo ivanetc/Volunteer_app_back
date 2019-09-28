@@ -36,7 +36,7 @@ public class GetActualEventsServlet extends HttpServlet {
         String responseString = "";
 
 
-        if (authToken != null && authToken.equals(ServerStarter.token))
+        if (authToken != null && authToken.equals(ServerStarter.token()))
             responseString = getActualEventsJson();
         else
             responseString = ServerStarter.getAccessDeniedResponce();

@@ -11,29 +11,41 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.Properties;
 import java.net.URL;
 import java.security.ProtectionDomain;
 
 public class ServerStarter {
 
-    public static final String token = "oX5n!E2i.VpWpHeo8E6F0q";
+    private static Properties properties;
 
-    public static void main(String[] args) {
+    public static String token() {
+        return properties.getProperty("apiToken");
+    }
+
+    private static int apiPort() {
+        return Integer.parseInt(properties.getProperty("apiPort"));
+    }
+
+    private static final String PROPERTIES_FILE = "config.properties";
+
+
+    public static void main(String[] args) throws FileNotFoundException {
+        properties = readProperties();
 
         startApiServer();
 
+        BotStarter botStarter = new BotStarter(properties);
         try {
-           // BotStarter.startBotServer();
+            botStarter.startBotServer();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private static void startApiServer() {
-        Server server = new Server(8080);
+        Server server = new Server(apiPort());
 
         // HTTP connector
         ServerConnector connector = new ServerConnector(server);
@@ -91,6 +103,19 @@ public class ServerStarter {
         } catch (IOException e) {
             e.printStackTrace();
             return "<error>Server error of creating json</error>";
+        }
+    }
+
+    private static Properties readProperties() throws FileNotFoundException {
+        InputStream inputStream = ServerStarter.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+        if (inputStream == null)
+            throw new FileNotFoundException("property file '" + PROPERTIES_FILE + "' not found in the classpath");
+        try {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            return properties;
+        } catch (IOException e) {
+            throw new RuntimeException("Incorrect properties file");
         }
     }
 }
