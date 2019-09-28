@@ -162,7 +162,7 @@
     }
 ]`
 
-### POST: api/events/createEventServlet
+### POST: api/events/createEvent
 #### Params:
 **auth**: token
 
