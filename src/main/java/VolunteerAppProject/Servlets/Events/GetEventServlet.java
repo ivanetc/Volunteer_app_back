@@ -66,9 +66,9 @@ public class GetEventServlet extends HttpServlet {
             jsonGenerator.writeFieldName("time_periods");
             jsonGenerator.writeStartArray();
 
-            addTimePeriodToJson(jsonGenerator, "27.09.19 14.30 - 18.00", true);
-            addTimePeriodToJson(jsonGenerator, "27.09.19 18.00 - 29.09.19 12.00", false);
-            addTimePeriodToJson(jsonGenerator, "29.09.19 12.00 - 16.00", true);
+            addTimePeriodToJson(jsonGenerator, 1, "27.09.19 14.30 - 18.00", true, false);
+            addTimePeriodToJson(jsonGenerator, 2, "27.09.19 18.00 - 29.09.19 12.00", false, true);
+            addTimePeriodToJson(jsonGenerator, 3, "29.09.19 12.00 - 16.00", false, false);
 
             jsonGenerator.writeEndArray();
 
@@ -84,11 +84,19 @@ public class GetEventServlet extends HttpServlet {
         }
     }
 
-    private void addTimePeriodToJson(JsonGenerator jsonGenerator, String period, boolean isApplied) throws IOException {
+    private void addTimePeriodToJson(
+            JsonGenerator jsonGenerator,
+            int timePeriodId,
+            String period,
+            boolean isApplied,
+            boolean isAvailable
+    ) throws IOException {
         jsonGenerator.writeStartObject();
 
+        jsonGenerator.writeStringField("time_period_id", String.valueOf(timePeriodId));
         jsonGenerator.writeStringField("time_period", period);
         jsonGenerator.writeStringField("is_applied", String.valueOf(isApplied));
+        jsonGenerator.writeStringField("is_available", String.valueOf(isAvailable));
 
         jsonGenerator.writeEndObject();
     }

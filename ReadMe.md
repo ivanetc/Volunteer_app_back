@@ -124,17 +124,23 @@
     "volunteer_requirements": "Требования к волонтерам. \n ТекстТребованийТекстТребованийТекст",
     "place":"Место проведения. Прям адрес. Прям такой длинный-длинный адрес",
     "time_periods":[
-        {
+        {   
+            "time_period_id": "1",
             "time_period":"27.09.19 14.30 - 18.00",
-            "is_applied":"true"
+            "is_applied":"true", 
+            "is_available":"true"
         },
         {
+            "time_period_id": "2",
             "time_period":"27.09.19 18.00 - 29.09.19 12.00",
             "is_applied":"false"
+            "is_available":"true"
         },
         {
+            "time_period_id": "3",
             "time_period":"29.09.19 12.00 - 16.00",
             "is_applied":"true"
+            "is_available":"true"
         }
     ]
 }
@@ -146,6 +152,7 @@
 
 **event_id**: id мероприятия в нашей базе
 **user_vk_id**: id юзера в вк
+**time_period_id**: id промежутка времени
 
 #### Return
 `
@@ -174,7 +181,7 @@
 `
     {
         "apply_status":"success",
-        "message":"Вы были успешно записаны на мероприятие"
+        "message":"Мероприятие было успешно создано"
     }
 ]`
 
