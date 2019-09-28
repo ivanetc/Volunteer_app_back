@@ -30,13 +30,12 @@ public class BotController {
     public void startBotServer() throws Exception {
         if (groupId() == 0 || groupToken() == null) throw new RuntimeException("Params are not set");
 
-        BotRequestHandler botHandler = new BotRequestHandler(apiClient, actor, properties.getProperty("secretKey"));
+        BotRequestHandler botHandler = new BotRequestHandler(apiClient, actor, properties);
         Server server = new Server(botPort());
 
         server.setHandler(new RequestHandler(botHandler, properties.getProperty("confirmationCode")));
 
         server.start();
-        server.join();
     }
 
     private int botPort() {
