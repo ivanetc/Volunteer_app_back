@@ -43,7 +43,7 @@
 ### POST: /api/user/Profile/
 #### Params:
 **auth**: token
-**user_id**: user_vk_id
+**vk_id**: "123123"
 **surname**:"Иванец"
 **first_name**:"Александр"
 **second_name**:"Сергеевич"
