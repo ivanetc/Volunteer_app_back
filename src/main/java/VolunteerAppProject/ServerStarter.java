@@ -4,6 +4,7 @@ import VolunteerAppProject.Bot.BotController;
 import VolunteerAppProject.Servlets.Events.*;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
 import VolunteerAppProject.Servlets.User.ProfileServlet;
+import VolunteerAppProject.Servlets.User.SetUsersRatingServlet;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -17,7 +18,7 @@ import java.util.Properties;
 
 public class ServerStarter {
 
-    private static Properties properties;
+    public static Properties properties;
 
     public static String token() {
         return properties.getProperty("apiToken");
@@ -97,6 +98,7 @@ public class ServerStarter {
 
         serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
         serverHandler.addServlet(ProfileServlet.class, "/api/user/Profile");
+        serverHandler.addServlet(SetUsersRatingServlet.class, "/api/user/setRating");
         serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
         serverHandler.addServlet(ApplyForEventServlet.class, "/api/events/applyForEvent");
         serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
@@ -123,6 +125,28 @@ public class ServerStarter {
         }
     }
 
+
+    public static String getRequestStatusJson() {
+        try {
+
+            JsonFactory jsonFactory = new JsonFactory();
+            OutputStream outputStream = new ByteArrayOutputStream();
+            JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
+
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("success", "true");
+            jsonGenerator.writeStringField("message", "Успех");
+            jsonGenerator.writeEndObject();
+
+            jsonGenerator.close();
+
+            return outputStream.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "<error>Server error of creating json</error>";
+        }
+    }
+
     private static Properties readProperties() throws FileNotFoundException {
         InputStream inputStream = ServerStarter.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
         if (inputStream == null)
@@ -135,4 +159,6 @@ public class ServerStarter {
             throw new RuntimeException("Incorrect properties file");
         }
     }
+
+
 }

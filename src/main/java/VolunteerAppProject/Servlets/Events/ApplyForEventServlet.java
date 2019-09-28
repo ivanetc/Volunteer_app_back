@@ -20,12 +20,31 @@ public class ApplyForEventServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
+
+        response.getWriter().println("NO POST METHOD");
+
+        request.getParts();
+
+        System.out.println("POST");
+
+    }
+
+    @Override
+    public void doGet(HttpServletRequest request,
+                      HttpServletResponse response) throws ServletException, IOException {
+
         String authToken = request.getParameter("auth");
+
+        String eventId = request.getParameter("event_id");
+        String userVkId = request.getParameter("user_vk_id");
+        String timePeriodIds = request.getParameter("time_period_ids");
+
+        System.out.println("ApplyForEventServlet: " + eventId + " \n " + userVkId + " \n " + timePeriodIds);
+
         String responseString = "";
 
-
         if (authToken != null && authToken.equals(ServerStarter.token()))
-            responseString = getApplyStatusJson();
+            responseString = ServerStarter.getRequestStatusJson();
         else
             responseString = ServerStarter.getAccessDeniedResponce();
 
@@ -34,35 +53,5 @@ public class ApplyForEventServlet extends HttpServlet {
         response.getWriter().println(responseString);
     }
 
-    @Override
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
 
-        response.getWriter().println("NO POST METHOD");
-
-        request.getParts();
-
-        System.out.println("POST");
-    }
-
-    private String getApplyStatusJson() {
-        try {
-
-            JsonFactory jsonFactory = new JsonFactory();
-            OutputStream outputStream = new ByteArrayOutputStream();
-            JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
-
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("apply_status", "success");
-            jsonGenerator.writeStringField("message", "Вы были успешно записаны на мероприятие");
-            jsonGenerator.writeEndObject();
-
-            jsonGenerator.close();
-
-            return outputStream.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "<error>Server error of creating json</error>";
-        }
-    }
 }

@@ -24,8 +24,8 @@ public class ProfileServlet extends HttpServlet{
         response.getWriter().println("OK");
 
         String authToken = request.getParameter("auth");
-        String user_id = request.getParameter("user_id");;
-//        int vk_id = request.getParameter("vk_id");
+//        String user_id = request.getParameter("user_id");;
+        int vk_id = Integer.parseInt(request.getParameter("vk_id"));
         String surname = request.getParameter("surname");
         String first_name = request.getParameter("first_name");
         String second_name = request.getParameter("second_name");
@@ -46,7 +46,7 @@ public class ProfileServlet extends HttpServlet{
         String information_source  = request.getParameter("information_source");
         Boolean mailing_agreement  = Boolean.getBoolean(request.getParameter("mailing_agreement"));
 
-        System.out.println(user_id + "\n" + surname + "\n" + first_name + "\n" +
+        System.out.println(vk_id + "\n" + surname + "\n" + first_name + "\n" +
                 second_name + "\n" + birthday+ "\n" + sex + "\n" + email + "\n" + phone + "\n" +
                 occupation + "\n" + langs + "\n" + volunteer_experience + "\n" + children_work_experience + "\n" +
                 skills + "\n" + expectations + "\n" +

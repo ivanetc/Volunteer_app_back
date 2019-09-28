@@ -19,12 +19,12 @@ public class DatabaseCreator {
 
 
     private static final String createVolunteersTable = "CREATE TABLE Volunteer (\n" +
-            "    id INT primary key AUTO_INCREMENT,\n" +
+            "    user_id INT primary key AUTO_INCREMENT,\n" +
             "    vk_id INT NOT NULL,\n" +
             "    surname TEXT,\n" +
             "    first_name TEXT,\n" +
             "    second_name TEXT,\n" +
-            "    birthday DATE,\n" +
+            "    birthday TEXT,\n" +
             "    sex TEXT,\n" +
             "    email TEXT,\n" +
             "    phone TEXT,\n" +
@@ -42,6 +42,24 @@ public class DatabaseCreator {
             "    mailing_agreement BOOL" +
             ")";
 
+    private static final String createEventsTable = "CREATE TABLE Event (\n" +
+            "    event_id INT primary key AUTO_INCREMENT,\n" +
+            "    vk_id INT NOT NULL,\n" +
+            "    name TEXT,\n" +
+            "    description TEXT,\n" +
+            "    date DATE,\n" +
+            "    volunteers_task TEXT,\n" +
+            "    volunteer_requirements TEXT,\n" +
+            "    place TEXT" +
+            ")";
+
+    private static final String createTimeIntervalsTable = "CREATE TABLE TimePeriodsTable (\n" +
+            "    time_period_id INT primary key AUTO_INCREMENT,\n" +
+            "    event_id INT NOT NULL,\n" +
+            "    time_period TEXT,\n" +
+            "    people_count INT" +
+            ")";
+
     public void main(String[] args) {
         initDB();
     }
@@ -49,7 +67,6 @@ public class DatabaseCreator {
     public static void initDB(){
 
         Scanner in = new Scanner(System.in);
-//        password = in.next();
 
         try {
 

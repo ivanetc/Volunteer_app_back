@@ -25,7 +25,7 @@ public class CreateEventServlet extends HttpServlet {
 
 
         if (authToken != null && authToken.equals(ServerStarter.token()))
-            responseString = getCreateEventStatusJson();
+            responseString = ServerStarter.getRequestStatusJson();
         else
             responseString = ServerStarter.getAccessDeniedResponce();
 
@@ -45,24 +45,4 @@ public class CreateEventServlet extends HttpServlet {
         System.out.println("POST");
     }
 
-    private String getCreateEventStatusJson() {
-        try {
-
-            JsonFactory jsonFactory = new JsonFactory();
-            OutputStream outputStream = new ByteArrayOutputStream();
-            JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
-
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("create_event_status", "success");
-            jsonGenerator.writeStringField("message", "Мероприятие было успешно создано");
-            jsonGenerator.writeEndObject();
-
-            jsonGenerator.close();
-
-            return outputStream.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "<error>Server error of creating json</error>";
-        }
-    }
 }

@@ -68,6 +68,24 @@
 `"OK"`
 
 
+
+
+
+### GET: /api/user/setRating
+#### Params:
+**auth**: token
+**vk_ids**: "1, 2, 3"
+**rating**:"5"
+
+#### Return
+`    
+    {
+         "success":"true",
+         "message":"Мероприятие было успешно создано"
+    }
+`
+
+
 # Events
 ### GET: /api/events/getActualEvents
 #### Params:
@@ -146,20 +164,20 @@
 }
 `
 
-### POST: /api/events/applyForEvent
+### GET: /api/events/applyForEvent
 #### Params:
 **auth**: token
 
 **event_id**: id мероприятия в нашей базе
 **user_vk_id**: id юзера в вк
-**time_period_id**: id промежутка времени
+**time_period_ids**: id-шки промежутков времени через запятую
 
 #### Return
 `
-    {
-        "apply_status":"success",
-        "message":"Вы были успешно записаны на мероприятие"
-    }
+     {
+         "success":"true",
+         "message":"Мероприятие было успешно создано"
+     }
 ]`
 
 ### POST: api/events/createEvent
@@ -180,9 +198,9 @@
 #### Return
 `
     {
-        "apply_status":"success",
+        "success":"true",
         "message":"Мероприятие было успешно создано"
     }
-]`
+`
 
 

@@ -4,7 +4,6 @@ import VolunteerAppProject.ServerStarter;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import org.eclipse.jetty.server.Server;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
-import java.util.TreeMap;
 
-@WebServlet(name = "GetRatingServlet", urlPatterns = { "api/user/getRating" })
-public class GetRatingServlet extends HttpServlet {
-
+@WebServlet(name = "SetUsersRatingServlet", urlPatterns = { "/api/user/setRating" })
+public class SetUsersRatingServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
@@ -36,37 +32,34 @@ public class GetRatingServlet extends HttpServlet {
                       HttpServletResponse response) throws ServletException, IOException {
 
         String authToken = request.getParameter("auth");
-        String responceString = "";
+        String responseString = "";
 
 
         if (authToken != null && authToken.equals(ServerStarter.token()))
-            responceString = getRatingJson();
+            responseString = getRatingChangeSuccessJson();
         else
-            responceString = ServerStarter.getAccessDeniedResponce();
+            responseString = ServerStarter.getAccessDeniedResponce();
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
-        response.getWriter().println(responceString);
+        response.getWriter().println(responseString);
     }
 
-    private String getRatingJson(){
-        Double rating = 4.7;
-
-        String ratingRepresentation = "";
-        if (rating == null)
-            ratingRepresentation = "-";
-        else
-            ratingRepresentation = String.valueOf(rating);
-
+    private String getRatingChangeSuccessJson(){
         try {
+
             JsonFactory jsonFactory = new JsonFactory();
             OutputStream outputStream = new ByteArrayOutputStream();
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
+
             jsonGenerator.writeStartObject();
 
-            jsonGenerator.writeStringField("user_rating", ratingRepresentation);
+            jsonGenerator.writeStringField("success", String.valueOf(true));
+            jsonGenerator.writeStringField("message", "Успешно");
+
 
             jsonGenerator.writeEndObject();
+
             jsonGenerator.close();
 
             return outputStream.toString();
