@@ -40,54 +40,32 @@
     "mailing_agreement":"true"
 }`
 
-### GET: /api/user/Profile/
+### POST: /api/user/Profile/
 #### Params:
 **auth**: token
 **user_id**: user_vk_id
-**surname**:"РРІР°РЅРµС†",
-**first_name**:"РђР»РµРєСЃР°РЅРґСЂ",
-**second_name**:"РЎРµСЂРіРµРµРІРёС‡",
-**birthday**:"14.05.1998",
-**sex**:"0",
-**email**:"ivanetsas@yandex.ru",
-**phone**:"89052668317",
-**occupation**:"РџРѕР»РёРјРµС‚Р°Р»Р» РРЅР¶РёРЅРёСЂРёРЅРі.",
-**langs**:"РђРЅРіР»РёР№СЃРєС‚РёС‚РµР»СЊРЅРѕ",
-**volunteer_experience**:"РћРїС‹С‚РћРїС‹С‚РћРїС‹С‚",
-**children_work_experience**:"РћРїС‹С‚CР”РµС”РµС‚СЊРјРё",
-**skills**:"РЏРЈРјЏРЈРјРµРЅСЊСЏРЈСЊСЏРЈРјРµРЅСЊСЏ",
-**expectations**:"РЏР¶РёРґР°РЅРёСЏ",
-**medical_contraindications**:")ЊРµ)",
-**specialty**:"РџСРїРѕ РєРѕРґСѓ",
-**food_preferences**:"Р•ЂСѓС‡РµРЅРѕ",
-**clothes_size**:"РЎРµСЂРіРµРµРІРёС‡",
-**information_source**:"Р‚СЊ",
+**surname**:"Иванец"
+**first_name**:"Александр"
+**second_name**:"Сергеевич"
+**birthday**:"14.05.1998"
+**sex**:"0"
+**email**:"ivanetsas@yandex.ru"
+**phone**:"89052668317"
+**occupation**:"СПбГУ"
+**langs**:"Java - читаю со словарем"
+**volunteer_experience**:"Нет"
+**children_work_experience**:"Нет"
+**skills**:"Скилы"
+**expectations**:"Ожидания"
+**medical_contraindications**:"Ожидания"
+**specialty**:"Профессиональные гадания по коду"
+**food_preferences**:"Людоед"
+**clothes_size**:"5XL"
+**information_source**:"Услышал голос в голове"
 **mailing_agreement**:"true"
 
 #### Return
-`{
-    "user_id":"1",
-    "vk_id":"4521",
-    "surname":"РРІР°РЅРµС†",
-    "first_name":"РђР»РµРєСЃР°РЅРґСЂ",
-    "second_name":"РЎРµСЂРіРµРµРІРёС‡",
-    "birthday":"14.05.1998",
-    "sex":"0",
-    "email":"ivanetsas@yandex.ru",
-    "phone":"89052668317",
-    "occupation":"РџРѕР»РёРјРµС‚Р°Р»Р» РРЅР¶РёРЅРёСЂРёРЅРі.",
-    "langs":"РђРЅРіР»РёР№СЃРєС‚РёС‚РµР»СЊРЅРѕ",
-    "volunteer_experience":"РћРїС‹С‚РћРїС‹С‚РћРїС‹С‚",
-    "children_work_experience":"РћРїС‹С‚CР”РµС”РµС‚СЊРјРё",
-    "skills":"РЏРЈРјЏРЈРјРµРЅСЊСЏРЈСЊСЏРЈРјРµРЅСЊСЏ",
-    "expectations":"РЏР¶РёРґР°РЅРёСЏ",
-    "medical_contraindications":")ЊРµ)",
-    "specialty":"РџСРїРѕ РєРѕРґСѓ",
-    "food_preferences":"Р•ЂСѓС‡РµРЅРѕ",
-    "clothes_size":"РЎРµСЂРіРµРµРІРёС‡",
-    "information_source":"Р‚СЊ",
-    "mailing_agreement":"true"
-}`
+`"OK"`
 
 
 # Events
