@@ -74,7 +74,7 @@
 ### GET: /api/user/setRating
 #### Params:
 **auth**: token
-**vk_ids**: "1, 2, 3"
+**vk_id**: "1"
 **rating**:"5"
 
 #### Return
