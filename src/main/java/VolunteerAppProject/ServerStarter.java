@@ -1,6 +1,7 @@
 package VolunteerAppProject;
 
 import VolunteerAppProject.Bot.BotController;
+import VolunteerAppProject.Servlets.Events.ApplyForEventServlet;
 import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
 import VolunteerAppProject.Servlets.Events.GetEventServlet;
 import VolunteerAppProject.Servlets.Events.GetMyPastEventsServlet;
@@ -100,6 +101,7 @@ public class ServerStarter {
         serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
         serverHandler.addServlet(ProfileServlet.class, "/api/user/Profile");
         serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
+        serverHandler.addServlet(ApplyForEventServlet.class, "/api/events/ApplyForEvent");
         serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
         serverHandler.addServlet(GetEventServlet.class, "/api/events/getEvent");
     }

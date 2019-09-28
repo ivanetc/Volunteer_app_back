@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -21,6 +22,38 @@ public class ProfileServlet extends HttpServlet{
                        HttpServletResponse response) throws ServletException, IOException {
 
         response.getWriter().println("OK");
+
+        String authToken = request.getParameter("auth");
+        String user_id = request.getParameter("user_id");;
+//        int vk_id = request.getParameter("vk_id");
+        String surname = request.getParameter("surname");
+        String first_name = request.getParameter("first_name");
+        String second_name = request.getParameter("second_name");
+        String birthday = request.getParameter("birthday");
+        int sex = Integer.parseInt(request.getParameter("sex"));
+        String email = request.getParameter("email");
+        String phone  = request.getParameter("phone");
+        String occupation  = request.getParameter("occupation");
+        String langs  = request.getParameter("langs");
+        String volunteer_experience  = request.getParameter("volunteer_experience");
+        String children_work_experience  = request.getParameter("children_work_experience");
+        String skills  = request.getParameter("skills");
+        String expectations  = request.getParameter("expectations");
+        String medical_contraindications  = request.getParameter("medical_contraindications");
+        String specialty  = request.getParameter("specialty");
+        String food_preferences  = request.getParameter("food_preferences");
+        String clothes_size  = request.getParameter("clothes_size");
+        String information_source  = request.getParameter("information_source");
+        Boolean mailing_agreement  = Boolean.getBoolean(request.getParameter("mailing_agreement"));
+
+        System.out.println(user_id + "\n" + surname + "\n" + first_name + "\n" +
+                second_name + "\n" + birthday+ "\n" + sex + "\n" + email + "\n" + phone + "\n" +
+                occupation + "\n" + langs + "\n" + volunteer_experience + "\n" + children_work_experience + "\n" +
+                skills + "\n" + expectations + "\n" +
+                medical_contraindications + "\n" + specialty + "\n" + food_preferences + "\n" + clothes_size
+                        + "\n" + information_source + "\n" + mailing_agreement
+                );
+
 
         request.getParts();
 
@@ -34,7 +67,6 @@ public class ProfileServlet extends HttpServlet{
         String authToken = request.getParameter("auth");
         String responseString = "";
 
-
         if (authToken != null && authToken.equals(ServerStarter.token()))
             responseString = getProfileJson();
         else
@@ -44,6 +76,8 @@ public class ProfileServlet extends HttpServlet{
         response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
         response.getWriter().println(responseString);
     }
+
+
 
     private String getProfileJson(){
         try {

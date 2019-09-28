@@ -20,29 +20,29 @@ public class ApplyForEventServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
-        response.getWriter().println("OK");
+        String authToken = request.getParameter("auth");
+        String responseString = "";
 
-        request.getParts();
 
-        System.out.println("POST");
+        if (authToken != null && authToken.equals(ServerStarter.token()))
+            responseString = getApplyStatusJson();
+        else
+            responseString = ServerStarter.getAccessDeniedResponce();
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
+        response.getWriter().println(responseString);
     }
 
     @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
-        String authToken = request.getParameter("auth");
-        String responceString = "";
+        response.getWriter().println("NO POST METHOD");
 
+        request.getParts();
 
-        if (authToken != null && authToken.equals(ServerStarter.token()))
-            responceString = getApplyStatusJson();
-        else
-            responceString = ServerStarter.getAccessDeniedResponce();
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
-        response.getWriter().println(responceString);
+        System.out.println("POST");
     }
 
     private String getApplyStatusJson() {

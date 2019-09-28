@@ -122,3 +122,19 @@
       "manager_id" : "145785"
     }
 ]`
+
+### POST: /api/events/ApplyForEvent
+#### Params:
+**auth**: token
+
+**event_id**: id мероприятия в нашей базе
+**user_vk_id**: id юзера в вк
+
+#### Return
+`
+    {
+        "apply_status":"success",
+        "message":"Вы были успешно записаны на мероприятие"
+    }
+]`
+
