@@ -1,5 +1,5 @@
 # API methods
-Методы доступны по хосту: demo11.alpha.vkhackathon.com:8080/
+Методы доступны по хосту: https://demo11.alpha.vkhackathon.com:8443/
 ## User
 ### GET: /api/user/getRating/
 #### Params:
