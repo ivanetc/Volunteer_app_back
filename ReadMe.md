@@ -77,13 +77,15 @@
 
 #### Return
 `[
-    { 
-      "event_id" : "74589"
-      "vk_id" : "546785",
-      "is_open_to_apply" : "true",
-      "is_user_applied" : "true",
-      "organizer_id" : "127845",
-      "manager_id" : "145785"
+    {
+        "event_id":"1",
+        "vk_id":"546785",
+        "is_open_to_apply":"true",
+        "name":"Имя мероприятия",
+        "date":"17 января 1970 14.30 - 15.00",
+        "is_user_applied":"true",
+        "organizer_id":"127845",
+        "manager_id":"145785"
     }
 ]`
 
@@ -138,7 +140,7 @@
 }
 `
 
-### POST: /api/events/ApplyForEvent
+### POST: /api/events/applyForEvent
 #### Params:
 **auth**: token
 
@@ -152,4 +154,28 @@
         "message":"Вы были успешно записаны на мероприятие"
     }
 ]`
+
+### POST: api/events/createEventServlet
+#### Params:
+**auth**: token
+
+**event_id**: id мероприятия в нашей базе
+**user_vk_id**: id юзера в вк
+
+**vk_id** : "124678",  
+**name**:"Название мероприятия с сервера",
+**description**:"Описание мероприятия с сервера",
+**date**:"29.09.19 12.00",
+**volunteers_task**:"Задачи для волонтеров. \n ТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачи",
+**volunteer_requirements**: "Требования к волонтерам. \n ТекстТребованийТекстТребованийТекст",
+**place**:"Место проведения. Прям адрес. Прям такой длинный-длинный адрес",
+
+#### Return
+`
+    {
+        "apply_status":"success",
+        "message":"Вы были успешно записаны на мероприятие"
+    }
+]`
+
 

@@ -53,10 +53,10 @@ public class GetMyPastEventsServlet extends HttpServlet {
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
             jsonGenerator.writeStartArray();
 
-            GetActualEventsServlet.addEventToJson(jsonGenerator, 5,367842, false, true, String.valueOf(127845), String.valueOf(145785));
-            GetActualEventsServlet.addEventToJson(jsonGenerator, 6,147965, false, true, String.valueOf(745687), String.valueOf(206874));
-            GetActualEventsServlet.addEventToJson(jsonGenerator, 7,379425, false, true, String.valueOf(745687), String.valueOf(206874));
-            GetActualEventsServlet.addEventToJson(jsonGenerator, 8,164758, false, true, "", String.valueOf(206874));
+            GetActualEventsServlet.addEventToJson(jsonGenerator,  "Имя мероприятия", "17 января 1970 14.30 - 15.00" ,5,367842, false, true, String.valueOf(127845), String.valueOf(145785));
+            GetActualEventsServlet.addEventToJson(jsonGenerator,  "Имя мероприятия", "17 января 1970 14.30 - 15.00" ,6,147965, false, true, String.valueOf(745687), String.valueOf(206874));
+            GetActualEventsServlet.addEventToJson(jsonGenerator,  "Имя мероприятия", "17 января 1970 14.30 - 15.00" ,7,379425, false, true, String.valueOf(745687), String.valueOf(206874));
+            GetActualEventsServlet.addEventToJson(jsonGenerator,  "Имя мероприятия", "17 января 1970 14.30 - 15.00" ,8,164758, false, true, "", String.valueOf(206874));
 
             jsonGenerator.writeEndArray();
             jsonGenerator.close();

@@ -1,10 +1,7 @@
 package VolunteerAppProject;
 
 import VolunteerAppProject.Bot.BotController;
-import VolunteerAppProject.Servlets.Events.ApplyForEventServlet;
-import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
-import VolunteerAppProject.Servlets.Events.GetEventServlet;
-import VolunteerAppProject.Servlets.Events.GetMyPastEventsServlet;
+import VolunteerAppProject.Servlets.Events.*;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
 import VolunteerAppProject.Servlets.User.ProfileServlet;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -101,9 +98,10 @@ public class ServerStarter {
         serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
         serverHandler.addServlet(ProfileServlet.class, "/api/user/Profile");
         serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
-        serverHandler.addServlet(ApplyForEventServlet.class, "/api/events/ApplyForEvent");
+        serverHandler.addServlet(ApplyForEventServlet.class, "/api/events/applyForEvent");
         serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
         serverHandler.addServlet(GetEventServlet.class, "/api/events/getEvent");
+        serverHandler.addServlet(CreateEventServlet.class, "/api/events/createEvent");
     }
 
     public static String getAccessDeniedResponce() {

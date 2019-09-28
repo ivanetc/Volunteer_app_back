@@ -14,7 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@WebServlet(name = "ApplyForEventServlet", urlPatterns = { "api/events/ApplyForEvent" })
+@WebServlet(name = "ApplyForEventServlet", urlPatterns = { "api/events/applyForEvent" })
 public class ApplyForEventServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request,
