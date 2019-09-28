@@ -21,19 +21,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-continuation -->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
@@ -102,7 +89,11 @@
         <artifactId>jackson-core</artifactId>
         <version>2.9.8</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.vk.api</groupId>
+      <artifactId>sdk</artifactId>
+      <version>1.0.6</version>
+    </dependency>
   </dependencies>
 
   <build>

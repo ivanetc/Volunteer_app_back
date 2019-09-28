@@ -1,5 +1,6 @@
 package VolunteerAppProject;
 
+import VolunteerAppProject.Bot.BotStarter;
 import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
 import VolunteerAppProject.Servlets.TestServlet;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
@@ -17,9 +18,15 @@ public class ServerStarter {
 
     public static final String token = "oX5n!E2i.VpWpHeo8E6F0q";
 
-    public static void main(String [] args) {
+    public static void main(String[] args) {
 
         startApiServer();
+
+        try {
+           // BotStarter.startBotServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void startApiServer() {
@@ -38,7 +45,7 @@ public class ServerStarter {
         }
     }
 
-    public static String getAccessDeniedResponce(){
+    public static String getAccessDeniedResponce() {
         try {
             JsonFactory jsonFactory = new JsonFactory();
             OutputStream outputStream = new ByteArrayOutputStream();
