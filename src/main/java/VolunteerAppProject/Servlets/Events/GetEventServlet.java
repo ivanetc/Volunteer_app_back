@@ -42,6 +42,7 @@ public class GetEventServlet extends HttpServlet {
             responseString = ServerStarter.getAccessDeniedResponce();
 
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
         response.getWriter().println(responseString);
     }
 

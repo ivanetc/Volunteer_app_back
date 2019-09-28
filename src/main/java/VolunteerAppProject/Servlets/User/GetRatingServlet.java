@@ -45,6 +45,7 @@ public class GetRatingServlet extends HttpServlet {
             responceString = ServerStarter.getAccessDeniedResponce();
 
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
         response.getWriter().println(responceString);
     }
 

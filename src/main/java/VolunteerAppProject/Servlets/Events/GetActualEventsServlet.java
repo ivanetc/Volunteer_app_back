@@ -42,6 +42,7 @@ public class GetActualEventsServlet extends HttpServlet {
             responseString = ServerStarter.getAccessDeniedResponce();
 
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
         response.getWriter().println(responseString);
     }
 
@@ -53,10 +54,10 @@ public class GetActualEventsServlet extends HttpServlet {
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
             jsonGenerator.writeStartArray();
 
-            addEventToJson(jsonGenerator, 546785, true, true, String.valueOf(127845), String.valueOf(145785));
-            addEventToJson(jsonGenerator, 542985, false, false, String.valueOf(745687), String.valueOf(206874));
-            addEventToJson(jsonGenerator, 547585, false, true, String.valueOf(745687), String.valueOf(206874));
-            addEventToJson(jsonGenerator, 478185, true, false, "", String.valueOf(206874));
+            addEventToJson(jsonGenerator, 1,546785, true, true, String.valueOf(127845), String.valueOf(145785));
+            addEventToJson(jsonGenerator, 2,542985, false, false, String.valueOf(745687), String.valueOf(206874));
+            addEventToJson(jsonGenerator, 3,547585, false, true, String.valueOf(745687), String.valueOf(206874));
+            addEventToJson(jsonGenerator, 4,478185, true, false, "", String.valueOf(206874));
 
             jsonGenerator.writeEndArray();
             jsonGenerator.close();
@@ -71,13 +72,15 @@ public class GetActualEventsServlet extends HttpServlet {
     private void addEventToJson(
             JsonGenerator jsonGenerator,
             int eventId,
+            int eventVkId,
             boolean isOpenToApply,
             boolean isUserApplied,
             String organizerId,
             String managerId
     ) throws IOException {
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("vk_id",  String.valueOf(eventId));
+        jsonGenerator.writeStringField("id",  String.valueOf(eventId));
+        jsonGenerator.writeStringField("vk_id",  String.valueOf(eventVkId));
         jsonGenerator.writeStringField("is_open_to_apply",  String.valueOf(isOpenToApply));
         jsonGenerator.writeStringField("is_user_applied",  String.valueOf(isUserApplied));
         jsonGenerator.writeStringField("organizer_id",  organizerId);
