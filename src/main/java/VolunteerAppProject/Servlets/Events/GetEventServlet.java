@@ -59,6 +59,7 @@ public class GetEventServlet extends HttpServlet {
             jsonGenerator.writeStringField("name", "Название мероприятия с сервера");
             jsonGenerator.writeStringField("description", "Описание мероприятия с сервера");
             jsonGenerator.writeStringField("date", "29.09.19 12.00");
+            jsonGenerator.writeStringField("weight", String.valueOf(5.0));
             jsonGenerator.writeStringField("volunteers_task", "Задачи для волонтеров. \n ТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиачиТекстзадачиТекстзадачи");
             jsonGenerator.writeStringField("volunteer_requirements", "Требования к волонтерам. \n ТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребований");
             jsonGenerator.writeStringField("place", "Место проведения. Прям адрес. Прям такой длинный-длинный адрес");
