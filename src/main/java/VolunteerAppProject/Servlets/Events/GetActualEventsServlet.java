@@ -41,6 +41,7 @@ public class GetActualEventsServlet extends HttpServlet {
         else
             responseString = ServerStarter.getAccessDeniedResponce();
 
+        response.setHeader("Access-Control-Allow-Origin", "*");
         response.getWriter().println(responseString);
     }
 
