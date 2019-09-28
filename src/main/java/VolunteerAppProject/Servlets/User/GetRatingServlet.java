@@ -17,7 +17,7 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
-@WebServlet(name = "GetRatingServlet", urlPatterns = { "/api/user/getRating" })
+@WebServlet(name = "GetRatingServlet", urlPatterns = { "api/user/getRating" })
 public class GetRatingServlet extends HttpServlet {
 
     @Override
@@ -48,7 +48,7 @@ public class GetRatingServlet extends HttpServlet {
     }
 
     private String getRatingJson(){
-        double rating = 4.5;
+        double rating = 4.7;
         try {
             JsonFactory jsonFactory = new JsonFactory();
             OutputStream outputStream = new ByteArrayOutputStream();
