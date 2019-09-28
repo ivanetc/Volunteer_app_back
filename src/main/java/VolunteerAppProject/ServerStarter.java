@@ -19,17 +19,17 @@ public class ServerStarter {
 
     public static void main(String [] args) {
 
+        startApiServer();
+    }
+
+    private static void startApiServer() {
         Server server = new Server(8080);
 
-        ServletContextHandler getFileHandler = new ServletContextHandler(server, "/test");
-        getFileHandler.addServlet(TestServlet.class, "/");
+        ServletContextHandler serverHandler = new ServletContextHandler(server, "/");
 
-        ServletContextHandler getActualEventsHandler = new ServletContextHandler(server, "/api/events/getActualEvents");
-        getActualEventsHandler.addServlet(GetActualEventsServlet.class, "/");
-
-        ServletContextHandler getRatingHandler = new ServletContextHandler(server, "/api/user/getRating");
-        getRatingHandler.addServlet(GetRatingServlet.class, "/");
-
+        serverHandler.addServlet(TestServlet.class, "/test");
+        serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
+        serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
 
         try {
             server.start();
