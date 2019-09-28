@@ -36,7 +36,7 @@ public class GetEventServlet extends HttpServlet {
         String responseString = "";
 
 
-        if (authToken != null && authToken.equals(ServerStarter.token))
+        if (authToken != null && authToken.equals(ServerStarter.token()))
             responseString = getEventJson();
         else
             responseString = ServerStarter.getAccessDeniedResponce();
