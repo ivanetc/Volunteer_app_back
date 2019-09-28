@@ -3,6 +3,7 @@ package VolunteerAppProject;
 import VolunteerAppProject.Bot.BotController;
 import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
 import VolunteerAppProject.Servlets.Events.GetEventServlet;
+import VolunteerAppProject.Servlets.Events.GetMyPastEventsServlet;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
 import VolunteerAppProject.Servlets.User.ProfileServlet;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -99,6 +100,7 @@ public class ServerStarter {
         serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
         serverHandler.addServlet(ProfileServlet.class, "/api/user/Profile");
         serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
+        serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
         serverHandler.addServlet(GetEventServlet.class, "/api/events/getEvent");
     }
 

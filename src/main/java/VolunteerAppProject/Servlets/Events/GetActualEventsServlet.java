@@ -69,7 +69,7 @@ public class GetActualEventsServlet extends HttpServlet {
         }
     }
 
-    private void addEventToJson(
+    public static void addEventToJson(
             JsonGenerator jsonGenerator,
             int eventId,
             int eventVkId,
@@ -79,7 +79,7 @@ public class GetActualEventsServlet extends HttpServlet {
             String managerId
     ) throws IOException {
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeStringField("id",  String.valueOf(eventId));
+        jsonGenerator.writeStringField("event_id",  String.valueOf(eventId));
         jsonGenerator.writeStringField("vk_id",  String.valueOf(eventVkId));
         jsonGenerator.writeStringField("is_open_to_apply",  String.valueOf(isOpenToApply));
         jsonGenerator.writeStringField("is_user_applied",  String.valueOf(isUserApplied));
