@@ -39,7 +39,7 @@ public class GetRatingServlet extends HttpServlet {
         String responceString = "";
 
 
-        if (authToken != null && authToken.equals(ServerStarter.token))
+        if (authToken != null && authToken.equals(ServerStarter.token()))
             responceString = getRatingJson();
         else
             responceString = ServerStarter.getAccessDeniedResponce();
