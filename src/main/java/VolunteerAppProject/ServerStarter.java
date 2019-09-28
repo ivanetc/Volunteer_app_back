@@ -1,20 +1,19 @@
 package VolunteerAppProject;
 
+import VolunteerAppProject.Bot.BotStarter;
 import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
 import VolunteerAppProject.Servlets.Events.GetEventServlet;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import org.eclipse.jetty.http.HttpVersion;
 import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.io.*;
 import java.util.Properties;
-import java.net.URL;
-import java.security.ProtectionDomain;
 
 public class ServerStarter {
 
@@ -24,8 +23,12 @@ public class ServerStarter {
         return properties.getProperty("apiToken");
     }
 
-    private static int apiPort() {
-        return Integer.parseInt(properties.getProperty("apiPort"));
+    private static int apiHttpPort() {
+        return Integer.parseInt(properties.getProperty("apiHttpPort"));
+    }
+
+    private static int apiHttpsPort() {
+        return Integer.parseInt(properties.getProperty("apiHttpsPort"));
     }
 
     private static final String PROPERTIES_FILE = "config.properties";
@@ -45,31 +48,9 @@ public class ServerStarter {
     }
 
     private static void startApiServer() {
-        Server server = new Server(apiPort());
+        Server server = new Server(apiHttpPort());
 
-        // HTTP connector
-        ServerConnector connector = new ServerConnector(server);
-        connector.setPort(8080);
-
-        // HTTPS configuration
-        HttpConfiguration https = new HttpConfiguration();
-        https.addCustomizer(new SecureRequestCustomizer());
-
-        // Configuring SSL
-        SslContextFactory sslContextFactory = new SslContextFactory();
-
-
-        sslContextFactory.setKeyStorePath("/home/ubuntu/keystore");
-        sslContextFactory.setKeyStorePassword("vol2019");
-        sslContextFactory.setKeyManagerPassword("vol2019");
-
-        // Configuring the connector
-        ServerConnector sslConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"), new HttpConnectionFactory(https));
-        sslConnector.setPort(443);
-
-        // Setting HTTP and HTTPS connectors
-        server.setConnectors(new Connector[]{connector, sslConnector});
-
+        configureServer(server);
         setServlets(server);
 
         try {
@@ -77,6 +58,38 @@ public class ServerStarter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void configureServer(Server server) {
+        // HTTP connector
+        ServerConnector connector = new ServerConnector(server);
+        connector.setPort(apiHttpPort());
+
+        // HTTPS configuration
+        HttpConfiguration https = new HttpConfiguration();
+        https.addCustomizer(new SecureRequestCustomizer());
+
+        https.setSecureScheme("https");
+        https.setSecurePort(apiHttpsPort());
+
+        // Configuring SSL
+        SslContextFactory sslContextFactory = new SslContextFactory();
+
+        sslContextFactory.setKeyStorePath("/home/ubuntu/keystore.jks");
+        sslContextFactory.setKeyStorePassword("vol2019");
+        sslContextFactory.setKeyManagerPassword("vol2019");
+        sslContextFactory.setTrustStorePath("/home/ubuntu/keystore.jks");
+        sslContextFactory.setTrustStorePassword("vol2019");
+
+        // Configuring the connector
+        ServerConnector sslConnector = new ServerConnector(
+                server, new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
+                new HttpConnectionFactory(https)
+        );
+        sslConnector.setPort(apiHttpsPort());
+
+        // Setting HTTP and HTTPS connectors
+        server.setConnectors(new Connector[]{connector, sslConnector});
     }
 
     private static void setServlets(Server server) {
