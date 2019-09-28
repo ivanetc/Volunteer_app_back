@@ -1,6 +1,6 @@
 package VolunteerAppProject;
 
-import VolunteerAppProject.Bot.BotStarter;
+import VolunteerAppProject.Bot.BotController;
 import VolunteerAppProject.Servlets.Events.GetActualEventsServlet;
 import VolunteerAppProject.Servlets.Events.GetEventServlet;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
@@ -40,9 +40,9 @@ public class ServerStarter {
 
         startApiServer();
 
-        BotStarter botStarter = new BotStarter(properties);
+        BotController botController = new BotController(properties);
         try {
-            botStarter.startBotServer();
+            botController.startBotServer();
         } catch (Exception e) {
             e.printStackTrace();
         }
