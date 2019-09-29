@@ -10,7 +10,7 @@
 #### Return
 `{ user_rating : "4.5" }`
 
-### GET: /api/user/Profile/
+### GET: /api/user/getProfile/
 #### Params:
 **auth**: token
 **user_id**: user_vk_id
@@ -40,7 +40,7 @@
     "mailing_agreement":"true"
 }`
 
-### POST: /api/user/Profile/
+### GET: /api/user/setProfile/
 #### Params:
 **auth**: token
 **vk_id**: "123123"
@@ -205,5 +205,39 @@
         "message":"Мероприятие было успешно создано"
     }
 `
+
+
+### GET: api/events/getMyOrgEvents
+#### Params:
+**auth**: token
+
+**user_vk_id**: id юзера в вк
+
+
+#### Return
+`
+[
+    {
+    "event_id":"1",
+    "vk_id":"546785",
+    "name":"Имя мероприятия",
+    "date":"17 января 1970 14.30 - 15.00",
+    "volunteers": [
+        {
+            "volunteer_id":"123789"
+        },
+        {
+            "volunteer_id":"576485"
+        },
+        {
+            "volunteer_id":"124786"
+        },
+        {
+            "volunteer_id":"321785"
+        }
+    ]
+    }
+]`
+
 
 

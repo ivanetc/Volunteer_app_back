@@ -2,10 +2,7 @@ package VolunteerAppProject;
 
 import VolunteerAppProject.Bot.BotController;
 import VolunteerAppProject.Servlets.Events.*;
-import VolunteerAppProject.Servlets.User.GetRatingServlet;
-import VolunteerAppProject.Servlets.User.GetUserStatusServlet;
-import VolunteerAppProject.Servlets.User.ProfileServlet;
-import VolunteerAppProject.Servlets.User.SetUsersRatingServlet;
+import VolunteerAppProject.Servlets.User.*;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -19,7 +16,7 @@ import java.util.Properties;
 
 public class ServerStarter {
 
-    public static Properties properties;
+    private static Properties properties;
 
     public static String token() {
         return properties.getProperty("apiToken");
@@ -98,7 +95,8 @@ public class ServerStarter {
         ServletContextHandler serverHandler = new ServletContextHandler(server, "/");
 
         serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
-        serverHandler.addServlet(ProfileServlet.class, "/api/user/Profile");
+        serverHandler.addServlet(GetProfileServlet.class, "/api/user/getProfile");
+        serverHandler.addServlet(SetProfileServlet.class, "/api/user/setProfile");
         serverHandler.addServlet(SetUsersRatingServlet.class, "/api/user/setRating");
         serverHandler.addServlet(GetUserStatusServlet.class, "/api/user/getUserStatus");
         serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
@@ -106,6 +104,7 @@ public class ServerStarter {
         serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
         serverHandler.addServlet(GetEventServlet.class, "/api/events/getEvent");
         serverHandler.addServlet(CreateEventServlet.class, "/api/events/createEvent");
+        serverHandler.addServlet(GetMyOrgEventsServlet.class, "/api/events/getMyOrgEvents");
     }
 
     public static String getAccessDeniedResponce() {
@@ -156,7 +155,7 @@ public class ServerStarter {
         }
     }
 
-    private static Properties readProperties() throws FileNotFoundException {
+    public static Properties readProperties() throws FileNotFoundException {
         InputStream inputStream = ServerStarter.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
         if (inputStream == null)
             throw new FileNotFoundException("property file '" + PROPERTIES_FILE + "' not found in the classpath");

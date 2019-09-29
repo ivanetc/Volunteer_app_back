@@ -66,15 +66,20 @@ public class DatabaseCreator {
             "    FOREIGN KEY (time_interval_id)  REFERENCES TimePeriodsTable (time_period_id)" +
             ")";
 
-    private static final String createTimeIntervalsTable = "CREATE TABLE TimePeriodsTable (\n" +
+    private static final String createTimePeriodsTable = "CREATE TABLE TimePeriodsTable (\n" +
             "    time_period_id INT primary key AUTO_INCREMENT,\n" +
             "    event_id INT NOT NULL,\n" +
             "    time_period TEXT,\n" +
             "    people_count INT" +
             ")";
 
-    public void main(String[] args) {
-        initDB();
+    public  void main(String[] args) {
+//        initDB();
+
+//        Boolean res = DataBase.addNewUser(
+//                "123456",
+//                "","","","","","","","","","","","","","","","","","","");
+       // System.out.println(res);
     }
 
     public static void initDB(){
@@ -89,8 +94,20 @@ public class DatabaseCreator {
             stmt = connection.createStatement();
 
 
-            PreparedStatement preparedCreateMessagesTableStatement = connection.prepareStatement(createVolunteersTable);
-            preparedCreateMessagesTableStatement.executeUpdate();
+//            PreparedStatement preparedCreateVolunteersTableStatement = connection.prepareStatement(createVolunteersTable);
+//            preparedCreateVolunteersTableStatement.executeUpdate();
+//
+//            PreparedStatement preparedCreateEventsTableStatement = connection.prepareStatement(createEventsTable);
+//            preparedCreateEventsTableStatement.executeUpdate();
+//
+//
+//            PreparedStatement preparedCreateTimePeriodsTableStatement = connection.prepareStatement(createTimePeriodsTable);
+//            preparedCreateTimePeriodsTableStatement.executeUpdate();
+
+//            Boolean res = DataBase.addNewUser(
+//                    "123456",
+//                    "","","","","","","","","","","","","","","","","","","");
+//            System.out.println(res);
 
         } catch (Exception e) {
             e.printStackTrace();
