@@ -41,6 +41,7 @@ public class SetProfileServlet extends HttpServlet {
                     request.getParameter("surname"),
                     request.getParameter("first_name"),
                     request.getParameter("second_name"),
+                    request.getParameter("museum"),
                     request.getParameter("birthday"),
                     request.getParameter("sex"),
                     request.getParameter("email"),

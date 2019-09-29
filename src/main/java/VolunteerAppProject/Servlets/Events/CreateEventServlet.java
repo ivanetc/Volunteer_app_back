@@ -23,19 +23,6 @@ public class CreateEventServlet extends HttpServlet {
 
         response.getWriter().println("NO GET METHOD");
 
-        Boolean success = DataBase.addNewEvent(
-                request.getParameter("user_vk_id"),
-                request.getParameter("vk_id"),
-                request.getParameter("name"),
-                request.getParameter("description"),
-                request.getParameter("date"),
-                request.getParameter("volunteers_task"),
-                request.getParameter("volunteer_requirements"),
-                request.getParameter("place"),
-                request.getParameter("time_periods")
-                );
-
-        request.getParts();
 
         System.out.println("POST");
     }
@@ -47,11 +34,26 @@ public class CreateEventServlet extends HttpServlet {
         String authToken = request.getParameter("auth");
         String responseString = "";
 
-        if (authToken != null && authToken.equals(ServerStarter.token()))
-            responseString = ServerStarter.getRequestStatusJson(true);
+        if (authToken != null && authToken.equals(ServerStarter.token())){
+            Boolean success = DataBase.addNewEvent(
+                    request.getParameter("user_vk_id"),
+                    request.getParameter("vk_id"),
+                    request.getParameter("name"),
+                    request.getParameter("description"),
+                    request.getParameter("date"),
+                    request.getParameter("volunteers_task"),
+                    request.getParameter("volunteer_requirements"),
+                    request.getParameter("place"),
+                    request.getParameter("time_periods")
+            );
+            responseString = ServerStarter.getRequestStatusJson(success);
+
+        }
         else
             responseString = ServerStarter.getAccessDeniedResponce();
 
+
+        System.out.println(responseString);
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
         response.getWriter().println(responseString);

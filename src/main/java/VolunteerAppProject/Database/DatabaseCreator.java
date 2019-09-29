@@ -24,6 +24,7 @@ public class DatabaseCreator {
             "    surname TEXT,\n" +
             "    first_name TEXT,\n" +
             "    second_name TEXT,\n" +
+            "    museum TEXT,\n" +
             "    birthday TEXT,\n" +
             "    sex TEXT,\n" +
             "    rating DOUBLE,\n" +
@@ -45,7 +46,8 @@ public class DatabaseCreator {
 
     private static final String createEventsTable = "CREATE TABLE Event (\n" +
             "    event_id INT primary key AUTO_INCREMENT,\n" +
-            "    vk_id INT NOT NULL,\n" +
+            "    vk_id INT,\n" +
+            "    organizer_id INT,\n" +
             "    name TEXT,\n" +
             "    description TEXT,\n" +
             "    date DATE,\n" +

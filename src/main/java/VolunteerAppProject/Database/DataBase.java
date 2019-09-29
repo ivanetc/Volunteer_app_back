@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static VolunteerAppProject.Database.SQL.insertNewTimeInterval;
+
 public class DataBase {
 
     private static Properties properties;
@@ -49,6 +51,7 @@ public class DataBase {
             String surname,
             String first_name,
             String second_name,
+            String museum,
             String birthday,
             String sex,
             String email,
@@ -94,6 +97,7 @@ public class DataBase {
                 surname,
                 first_name,
                 second_name,
+                museum,
                 birthday,
                 newSex,
                 email,
@@ -138,43 +142,97 @@ public class DataBase {
             return false;
         }
 
-        String[] t_periods = time_periods.split("$");
-        for(String pair : t_periods)
-        {
-            String[] entry = pair.split("%");
-            Integer people_count = null;
-            /*try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                people_count = Integer.parseInt(entry[1].trim());
+        PreparedStatement curPreparedStatement = insertNewEvent(
+                userVkId, vkId, name, description, date, volunteers_task, volunteer_requirements, place
+        );
 
 
-                    if (generatedKeys.next()) {
-                        user.setId(generatedKeys.getLong(1));
+        try (ResultSet generatedKeys = curPreparedStatement.getGeneratedKeys()) {
+
+            if (generatedKeys.next()){
+                int currentKey = generatedKeys.getInt(1);
+
+                String[] t_periods = time_periods.split("$");
+
+                for (String pair : t_periods) {
+                    String[] entry = pair.split("%");
+                    Integer people_count = null;
+                    String time_period = "";
+                    if (entry.length >= 2) {
+                        people_count = Integer.parseInt(entry[1].trim());
+                        time_period = entry[0].trim();
+
+                    } else{
+                        people_count = 0;
+                        time_period = "";
                     }
-                    else {
-                        throw new SQLException("Creating user failed, no ID obtained.");
-                    }
 
+                    insertNewTimeInterval(currentKey, time_period, people_count);
 
-                insertNewTimeInterval(, entry[0].trim(), people_count);
-            } catch (NumberFormatException e){
-                return false;
-            }*/
+                }
+            }
+        } catch (NumberFormatException e){
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-        //    private Boolean insertNewTimeInterval(
-        //            int event_id,
-        //            String time_period,
-        //            int people_count
-        //    )
 
-        return false;
+        return true;
 
     }
+
+    private static PreparedStatement insertNewEvent(
+            int organizer_vk_id,
+            int vk_id,
+            String name,
+            String description,
+            String date,
+            String volunteers_task,
+            String volunteer_requirements,
+            String place
+    ) {
+        PreparedStatement preparedStatement = getPreparedStatement(SQL.insertNewEvent);
+        prepareInt(preparedStatement, vk_id, 1);
+        prepareInt(preparedStatement, organizer_vk_id, 2);
+        prepareString(preparedStatement, name, 3);
+        prepareString(preparedStatement, description, 4);
+
+        String[] dateList = date.split(".");
+        String year = "1970";
+        String month = "01";
+        String day = "01";
+        if (dateList.length == 3) {
+            if (dateList[2].length() == 4)
+                year = dateList[2];
+            if (dateList[1].length() == 2)
+                month = dateList[1];
+            else if (dateList[1].length() == 1)
+                month = String.format("0%s", dateList[1]);
+            if (dateList[0].length() == 2)
+                day = dateList[0];
+            else if (dateList[0].length() == 1)
+                day = String.format("0%s", dateList[1]);
+        }
+
+        String dateString = String.format("%s-%s-%s", year, month, day);
+        prepareDate(preparedStatement, java.sql.Date.valueOf(dateString), 5);
+
+        prepareString(preparedStatement, volunteers_task, 6);
+        prepareString(preparedStatement, volunteer_requirements, 7);
+        prepareString(preparedStatement, place, 8);
+
+        insertContent(preparedStatement);
+        return preparedStatement;
+    }
+
 
     private static Boolean insertNewUser(
             int vk_id,
             String surname,
             String first_name,
             String second_name,
+            String museum,
             String birthday,
             int sex,
             String email,
@@ -198,70 +256,31 @@ public class DataBase {
         prepareString(preparedStatement, surname, 2);
         prepareString(preparedStatement, first_name, 3);
         prepareString(preparedStatement, second_name, 4);
-        prepareString(preparedStatement, birthday, 5);
-        prepareInt(preparedStatement, sex, 6);
-        prepareDouble(preparedStatement, -1.0, 7);
-        prepareDouble(preparedStatement, -1.0, 7);
-        prepareString(preparedStatement, email, 8);
-        prepareString(preparedStatement, phone, 9);
-        prepareString(preparedStatement, occupation, 10);
-        prepareString(preparedStatement, langs, 11);
-        prepareString(preparedStatement, volunteer_experience, 12);
-        prepareString(preparedStatement, children_work_experience, 13);
-        prepareString(preparedStatement, skills, 14);
-        prepareString(preparedStatement, expectations, 15);
-        prepareString(preparedStatement, medical_contraindications, 16);
-        prepareString(preparedStatement, specialty, 17);
-        prepareString(preparedStatement, food_preferences, 18);
-        prepareString(preparedStatement, clothes_size, 19);
-        prepareString(preparedStatement, information_source, 20);
-        prepareBool(preparedStatement, mailing_agreement, 21);
+        prepareString(preparedStatement, museum, 5);
+        prepareString(preparedStatement, birthday, 6);
+        prepareInt(preparedStatement, sex, 7);
+        prepareDouble(preparedStatement, -1.0, 8);
+        prepareDouble(preparedStatement, -1.0, 9);
+        prepareString(preparedStatement, email, 10);
+        prepareString(preparedStatement, phone, 11);
+        prepareString(preparedStatement, occupation, 12);
+        prepareString(preparedStatement, langs, 13);
+        prepareString(preparedStatement, volunteer_experience, 14);
+        prepareString(preparedStatement, children_work_experience, 15);
+        prepareString(preparedStatement, skills, 16);
+        prepareString(preparedStatement, expectations, 17);
+        prepareString(preparedStatement, medical_contraindications, 18);
+        prepareString(preparedStatement, specialty, 19);
+        prepareString(preparedStatement, food_preferences, 20);
+        prepareString(preparedStatement, clothes_size, 21);
+        prepareString(preparedStatement, information_source, 22);
+        prepareBool(preparedStatement, mailing_agreement, 23);
 
         return insertContent(preparedStatement);
     }
 
-    private Boolean insertNewEvent(
-            int user_vk_id,
-            int vk_id,
-            String name,
-            String description,
-            String date,
-            String volunteers_task,
-            String volunteer_requirements,
-            String place
-    ) {
-        PreparedStatement preparedStatement = getPreparedStatement(SQL.insertNewEvent);
-        prepareInt(preparedStatement, vk_id, 1);
-        prepareString(preparedStatement, name, 2);
-        prepareString(preparedStatement, description, 3);
 
-        String[] dateList = date.split(".");
-        String year = "1970";
-        String month = "01";
-        String day = "01";
-        if (dateList.length == 3) {
-            if (dateList[2].length() == 4)
-                year = dateList[2];
-            if (dateList[1].length() == 2)
-                month = dateList[1];
-            else if (dateList[1].length() == 1)
-                month = String.format("0%s", dateList[1]);
-            if (dateList[0].length() == 2)
-                day = dateList[0];
-            else if (dateList[0].length() == 1)
-                day = String.format("0%s", dateList[1]);
-        }
-        String dateString = String.format("%s-%s-%s", year, month, day);
-        prepareDate(preparedStatement, java.sql.Date.valueOf(dateString), 4);
-
-        prepareString(preparedStatement, volunteers_task, 5);
-        prepareString(preparedStatement, volunteer_requirements, 6);
-        prepareString(preparedStatement, place, 7);
-
-        return insertContent(preparedStatement);
-    }
-
-    /*private static Boolean insertNewTimeInterval(
+    private static Boolean insertNewTimeInterval(
             int event_id,
             String time_period,
             int people_count
@@ -273,7 +292,7 @@ public class DataBase {
         prepareInt(preparedStatement, people_count, 3);
 
         return insertContent(preparedStatement);
-    }*/
+    }
 
     private static boolean insertContent(PreparedStatement preparedStatement){
         try {

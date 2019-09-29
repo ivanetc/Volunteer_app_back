@@ -29,69 +29,69 @@ public class GetProfileServlet extends HttpServlet{
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
-        String authToken = request.getParameter("auth");
-        String vk_id = request.getParameter("vk_id");
-
-        System.out.println("UserId " + vk_id);
-
-        String responseString = "";
-
-        DataBase dataBase = new DataBase();
-
-        System.out.println(authToken);
-
-        if (authToken != null && authToken.equals(ServerStarter.token())) {
-            System.out.println("!!!!");
-            try {
-
-                System.out.println("in_try");
-                insertInDb();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            boolean success =  dataBase.addNewUser(
-                    vk_id,
-                    request.getParameter("surname"),
-                    request.getParameter("first_name"),
-                    request.getParameter("second_name"),
-                    request.getParameter("birthday"),
-                    request.getParameter("sex"),
-                    request.getParameter("email"),
-                    request.getParameter("phone"),
-                    request.getParameter("occupation"),
-                    request.getParameter("langs"),
-                    request.getParameter("volunteer_experience"),
-                    request.getParameter("children_work_experience"),
-                    request.getParameter("skills"),
-                    request.getParameter("expectations"),
-                    request.getParameter("medical_contraindications"),
-                    request.getParameter("specialty"),
-                    request.getParameter("food_preferences"),
-                    request.getParameter("clothes_size"),
-                    request.getParameter("information_source"),
-                    request.getParameter("mailing_agreement")
-            );
-            if (success){
-                responseString = ServerStarter.getRequestStatusJson(true);
-                System.out.println("User inserted!");
-            }
-            else {
-                responseString = ServerStarter.getRequestStatusJson(false);
-                System.out.println("False");
-            }
-        }
-        else
-            responseString = ServerStarter.getAccessDeniedResponce();
-
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
-        response.getWriter().println(responseString);
-
-        request.getParts();
-
-        System.out.println("POST");
+//        String authToken = request.getParameter("auth");
+//        String vk_id = request.getParameter("vk_id");
+//
+//        System.out.println("UserId " + vk_id);
+//
+//        String responseString = "";
+//
+//        DataBase dataBase = new DataBase();
+//
+//        System.out.println(authToken);
+//
+//        if (authToken != null && authToken.equals(ServerStarter.token())) {
+//            System.out.println("!!!!");
+//            try {
+//
+//                System.out.println("in_try");
+//                insertInDb();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            boolean success =  dataBase.addNewUser(
+//                    vk_id,
+//                    request.getParameter("surname"),
+//                    request.getParameter("first_name"),
+//                    request.getParameter("second_name"),
+//                    request.getParameter("birthday"),
+//                    request.getParameter("sex"),
+//                    request.getParameter("email"),
+//                    request.getParameter("phone"),
+//                    request.getParameter("occupation"),
+//                    request.getParameter("langs"),
+//                    request.getParameter("volunteer_experience"),
+//                    request.getParameter("children_work_experience"),
+//                    request.getParameter("skills"),
+//                    request.getParameter("expectations"),
+//                    request.getParameter("medical_contraindications"),
+//                    request.getParameter("specialty"),
+//                    request.getParameter("food_preferences"),
+//                    request.getParameter("clothes_size"),
+//                    request.getParameter("information_source"),
+//                    request.getParameter("mailing_agreement")
+//            );
+//            if (success){
+//                responseString = ServerStarter.getRequestStatusJson(true);
+//                System.out.println("User inserted!");
+//            }
+//            else {
+//                responseString = ServerStarter.getRequestStatusJson(false);
+//                System.out.println("False");
+//            }
+//        }
+//        else
+//            responseString = ServerStarter.getAccessDeniedResponce();
+//
+//
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        response.setCharacterEncoding(JsonEncoding.UTF8.getJavaName());
+//        response.getWriter().println(responseString);
+//
+//        request.getParts();
+//
+//        System.out.println("POST");
     }
 
     private void insertInDb() throws ClassNotFoundException, SQLException {
