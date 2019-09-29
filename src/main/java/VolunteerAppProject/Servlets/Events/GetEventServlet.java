@@ -35,7 +35,6 @@ public class GetEventServlet extends HttpServlet {
         String authToken = request.getParameter("auth");
         String responseString = "";
 
-
         if (authToken != null && authToken.equals(ServerStarter.token()))
             responseString = getEventJson();
         else
@@ -55,21 +54,20 @@ public class GetEventServlet extends HttpServlet {
 
             jsonGenerator.writeStartObject();
 
-            jsonGenerator.writeStringField("vk_id", String.valueOf(124678));
-            jsonGenerator.writeStringField("name", "Название мероприятия с сервера");
-            jsonGenerator.writeStringField("description", "Описание мероприятия с сервера");
-            jsonGenerator.writeStringField("date", "29.09.19 12.00");
+            jsonGenerator.writeStringField("vk_id", String.valueOf(64509964));
+            jsonGenerator.writeStringField("name", "Тотальный диктант в Санкт-Петербурге");
+            jsonGenerator.writeStringField("description", "Всероссийская проверка знаний по Русскому языку");
+            jsonGenerator.writeStringField("date", "4 апреля 2020 14:00");
             jsonGenerator.writeStringField("weight", String.valueOf(5.0));
-            jsonGenerator.writeStringField("volunteers_task", "Задачи для волонтеров. \n ТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиТекстзадачиачиТекстзадачиТекстзадачи");
-            jsonGenerator.writeStringField("volunteer_requirements", "Требования к волонтерам. \n ТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребованийТекстТребований");
-            jsonGenerator.writeStringField("place", "Место проведения. Прям адрес. Прям такой длинный-длинный адрес");
+            jsonGenerator.writeStringField("volunteers_task", "Встреча и навигация участников диктанта");
+            jsonGenerator.writeStringField("volunteer_requirements", "Вежливость, дружелюбность и любовь к Русскому языку");
+            jsonGenerator.writeStringField("place", "Санкт-Петербург.");
 
             jsonGenerator.writeFieldName("time_periods");
             jsonGenerator.writeStartArray();
 
-            addTimePeriodToJson(jsonGenerator, 1, "27.09.19 14.30 - 18.00", true, false);
-            addTimePeriodToJson(jsonGenerator, 2, "27.09.19 18.00 - 29.09.19 12.00", false, true);
-            addTimePeriodToJson(jsonGenerator, 3, "29.09.19 12.00 - 16.00", false, false);
+            addTimePeriodToJson(jsonGenerator, 1, "4 апреля 2020 14:00 - 15.00", true, false);
+            addTimePeriodToJson(jsonGenerator, 2, "4 апреля 2020 15:00 - 16.00", false, true);
 
             jsonGenerator.writeEndArray();
 

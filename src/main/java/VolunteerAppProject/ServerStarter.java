@@ -40,6 +40,7 @@ public class ServerStarter {
 
 
     public static void main(String[] args) throws FileNotFoundException {
+
         properties = readProperties();
 
         botController = new BotController(properties);
@@ -48,6 +49,7 @@ public class ServerStarter {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         startApiServer();
     }

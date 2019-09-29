@@ -54,9 +54,8 @@ public class GetMyOrgEventsServlet extends HttpServlet {
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
             jsonGenerator.writeStartArray();
 
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00" , 1,546785, volunteers);
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00" , 1,546785, volunteers);
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00" , 1,546785, volunteers);
+            addEventToJson(jsonGenerator, "Тотальный диктант в Санкт-Петербурге", "4 апреля 2020 14:00",7,64509964, volunteers);
+            addEventToJson(jsonGenerator, "VK Hackathon", "27 - 29 сентября 2019" ,7,103600381, volunteers);
 
             jsonGenerator.writeEndArray();
             jsonGenerator.close();

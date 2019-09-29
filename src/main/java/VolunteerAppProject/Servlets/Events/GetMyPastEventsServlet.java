@@ -53,7 +53,7 @@ public class GetMyPastEventsServlet extends HttpServlet {
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
             jsonGenerator.writeStartArray();
 
-            GetActualEventsServlet.addEventToJson(jsonGenerator,  "VK Hackathon", "27 - 29 сентября 2019" ,7,379425, false, true, String.valueOf(745687), String.valueOf(78062857));
+            GetActualEventsServlet.addEventToJson(jsonGenerator,  "VK Hackathon", "27 - 29 сентября 2019" ,7,103600381, false, true, String.valueOf(745687), String.valueOf(78062857));
             GetActualEventsServlet.addEventToJson(jsonGenerator,  "Конференция «Менеджмент Будущего»", "4 - 6 апреля 2019" ,5,33351123, false, true, String.valueOf(52298374), String.valueOf(78062857));
             GetActualEventsServlet.addEventToJson(jsonGenerator,  "Неделя когнитивных экспериментов", " 20 - 24 августа 2019" ,6,169749729, false, true, String.valueOf(52298374), String.valueOf(78062857));
 

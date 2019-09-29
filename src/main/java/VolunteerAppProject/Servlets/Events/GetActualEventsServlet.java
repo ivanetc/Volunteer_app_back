@@ -54,10 +54,10 @@ public class GetActualEventsServlet extends HttpServlet {
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
             jsonGenerator.writeStartArray();
 
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00" , 1,546785, true, true, String.valueOf(127845), String.valueOf(145785));
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00",2,542985, false, false, String.valueOf(745687), String.valueOf(206874));
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00",3,547585, false, true, String.valueOf(745687), String.valueOf(206874));
-            addEventToJson(jsonGenerator, "Имя мероприятия", "17 января 1970 14.30 - 15.00",4,478185, true, false, "", String.valueOf(206874));
+            addEventToJson(jsonGenerator, "18-й Санкт-Петербургский Фестиваль Татуировки", "20 июня 2020 12:00 — 21 июня 2020 22:00",5,65337441, false, false, String.valueOf(745687), String.valueOf(206874));
+            addEventToJson(jsonGenerator, "Всероссийский фестиваль красок — Санкт-Петербург", "12 июня 2020 15:00 — 14 июня 2020 19:00",6,55031798, true, true, String.valueOf(54162110), String.valueOf(206874));
+            addEventToJson(jsonGenerator, "Тотальный диктант в Санкт-Петербурге", "4 апреля 2020 14:00",7,64509964, true, false, String.valueOf(39707896), String.valueOf(206874));
+            addEventToJson(jsonGenerator, "JAZZMAN FESTIVAL", "7 марта 17:00",8,144628605, true, true, String.valueOf(157287437), String.valueOf(206874));
 
             jsonGenerator.writeEndArray();
             jsonGenerator.close();

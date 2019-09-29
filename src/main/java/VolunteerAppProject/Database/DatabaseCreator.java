@@ -75,8 +75,21 @@ public class DatabaseCreator {
             "    people_count INT" +
             ")";
 
-    public  void main(String[] args) {
-//        initDB();
+    public static void main(String[] args) {
+        //initDB();
+
+        DataBase.addNewEvent(
+                "123534",
+                "124983",
+                "NameTest",
+                "Description",
+                "14.01.19980",
+                "Task",
+                "requirements",
+                "place",
+                "Период1%26$Период2%87"
+
+        );
 
 //        Boolean res = DataBase.addNewUser(
 //                "123456",
@@ -96,15 +109,18 @@ public class DatabaseCreator {
             stmt = connection.createStatement();
 
 
-//            PreparedStatement preparedCreateVolunteersTableStatement = connection.prepareStatement(createVolunteersTable);
-//            preparedCreateVolunteersTableStatement.executeUpdate();
-//
-//            PreparedStatement preparedCreateEventsTableStatement = connection.prepareStatement(createEventsTable);
-//            preparedCreateEventsTableStatement.executeUpdate();
-//
-//
-//            PreparedStatement preparedCreateTimePeriodsTableStatement = connection.prepareStatement(createTimePeriodsTable);
-//            preparedCreateTimePeriodsTableStatement.executeUpdate();
+            PreparedStatement preparedCreateVolunteersTableStatement = connection.prepareStatement(createVolunteersTable);
+            preparedCreateVolunteersTableStatement.executeUpdate();
+
+            PreparedStatement preparedCreateEventsTableStatement = connection.prepareStatement(createEventsTable);
+            preparedCreateEventsTableStatement.executeUpdate();
+
+
+            PreparedStatement preparedCreateTimePeriodsTableStatement = connection.prepareStatement(createTimePeriodsTable);
+            preparedCreateTimePeriodsTableStatement.executeUpdate();
+
+            PreparedStatement preparedCreateTable4Statement = connection.prepareStatement(createVolunteersToEventsTable);
+            preparedCreateTable4Statement.executeUpdate();
 
 //            Boolean res = DataBase.addNewUser(
 //                    "123456",
