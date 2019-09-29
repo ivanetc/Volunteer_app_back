@@ -104,6 +104,7 @@ public class ServerStarter {
         serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
         serverHandler.addServlet(GetEventServlet.class, "/api/events/getEvent");
         serverHandler.addServlet(CreateEventServlet.class, "/api/events/createEvent");
+        serverHandler.addServlet(GetMyOrgEventsServlet.class, "/api/events/getMyOrgEvents");
     }
 
     public static String getAccessDeniedResponce() {

@@ -27,7 +27,6 @@ public class DataBase {
     }
 
     private static Connection connection;
-//    private Statement stmt;
 
     public static void connectDB(){
 
@@ -67,7 +66,6 @@ public class DataBase {
             String information_source,
             String mailing_agreement
     ){
-        System.out.println("I`m in");
         connectDB();
 
         Integer vkId = null;
@@ -320,6 +318,4 @@ public class DataBase {
         try { connection.close(); } catch(SQLException se) { /*can't do anything */ }
 //        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
     }
-
-//    private static
 }
