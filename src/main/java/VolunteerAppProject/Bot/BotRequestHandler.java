@@ -54,7 +54,7 @@ public class BotRequestHandler extends CallbackApi {
                 addGoToAppButton(answer);
                 answer.message(
                         "Привет, это бот волонтёрской программы \"Спутник\"\n" +
-                                "Через меня ты можешь ничего..");
+                                "Через меня ты можешь перейти в приложение и записаться на мероприятие");
                 break;
             case GO_TO_APP_FULL:
             case GO_TO_APP_1:
