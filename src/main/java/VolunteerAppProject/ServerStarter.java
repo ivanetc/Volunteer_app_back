@@ -3,6 +3,7 @@ package VolunteerAppProject;
 import VolunteerAppProject.Bot.BotController;
 import VolunteerAppProject.Servlets.Events.*;
 import VolunteerAppProject.Servlets.User.GetRatingServlet;
+import VolunteerAppProject.Servlets.User.GetUserStatusServlet;
 import VolunteerAppProject.Servlets.User.ProfileServlet;
 import VolunteerAppProject.Servlets.User.SetUsersRatingServlet;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -99,6 +100,7 @@ public class ServerStarter {
         serverHandler.addServlet(GetRatingServlet.class, "/api/user/getRating");
         serverHandler.addServlet(ProfileServlet.class, "/api/user/Profile");
         serverHandler.addServlet(SetUsersRatingServlet.class, "/api/user/setRating");
+        serverHandler.addServlet(GetUserStatusServlet.class, "/api/user/getUserStatus");
         serverHandler.addServlet(GetActualEventsServlet.class, "/api/events/getActualEvents");
         serverHandler.addServlet(ApplyForEventServlet.class, "/api/events/applyForEvent");
         serverHandler.addServlet(GetMyPastEventsServlet.class, "/api/events/getMyPastEvents");
@@ -126,7 +128,7 @@ public class ServerStarter {
     }
 
 
-    public static String getRequestStatusJson() {
+    public static String getRequestStatusJson(Boolean status) {
         try {
 
             JsonFactory jsonFactory = new JsonFactory();
@@ -134,8 +136,15 @@ public class ServerStarter {
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
 
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("success", "true");
-            jsonGenerator.writeStringField("message", "Успех");
+
+            if (status){
+                jsonGenerator.writeStringField("success", "true");
+                jsonGenerator.writeStringField("message", "Успех");
+            } else
+            {
+                jsonGenerator.writeStringField("success", "false");
+                jsonGenerator.writeStringField("message", "Ошибка выполнения запроса");
+            }
             jsonGenerator.writeEndObject();
 
             jsonGenerator.close();

@@ -36,7 +36,7 @@ public class SetUsersRatingServlet extends HttpServlet {
 
 
         if (authToken != null && authToken.equals(ServerStarter.token()))
-            responseString = getRatingChangeSuccessJson();
+            responseString = ServerStarter.getRequestStatusJson(true);
         else
             responseString = ServerStarter.getAccessDeniedResponce();
 
@@ -45,27 +45,5 @@ public class SetUsersRatingServlet extends HttpServlet {
         response.getWriter().println(responseString);
     }
 
-    private String getRatingChangeSuccessJson(){
-        try {
 
-            JsonFactory jsonFactory = new JsonFactory();
-            OutputStream outputStream = new ByteArrayOutputStream();
-            JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8); // or Stream, Reader
-
-            jsonGenerator.writeStartObject();
-
-            jsonGenerator.writeStringField("success", String.valueOf(true));
-            jsonGenerator.writeStringField("message", "Успешно");
-
-
-            jsonGenerator.writeEndObject();
-
-            jsonGenerator.close();
-
-            return outputStream.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "<error>Server error of creating json</error>";
-        }
-    }
 }
