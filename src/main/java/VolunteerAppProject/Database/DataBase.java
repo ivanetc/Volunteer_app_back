@@ -2,37 +2,42 @@ package VolunteerAppProject.Database;
 
 import VolunteerAppProject.ServerStarter;
 
+import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
+import java.util.Properties;
 
 public class DataBase {
 
-    private static String url(){
-        return ServerStarter.properties.getProperty("dataBaseConnectionString");
+    private static Properties properties;
+
+    private static String url() throws FileNotFoundException {
+//        return properties.getProperty("dataBaseConnectionString");
+        return "jdbc:mysql://demo11.alpha.vkhackathon.com:3306/VolunteerAppDatabase";
     }
 
     private static String user(){
-        return ServerStarter.properties.getProperty("dataBaseUserLogin");
+//        return properties.getProperty("dataBaseUserLogin");
+        return "AppServer";
     }
     private static String password(){
-        return ServerStarter.properties.getProperty("dataBaseUserPassword");
+//        return properties.getProperty("dataBaseUserPassword");
+        return "vol2019";
     }
 
     private static Connection connection;
-    private static Statement stmt;
+//    private Statement stmt;
 
-    public static void initDB(){
-
-        Scanner in = new Scanner(System.in);
+    public static void connectDB(){
 
         try {
+            properties = ServerStarter.readProperties();
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(url(), user(), password());
-            stmt = connection.createStatement();
+//            stmt = connection.createStatement();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,11 +67,15 @@ public class DataBase {
             String information_source,
             String mailing_agreement
     ){
+        System.out.println("I`m in");
+        connectDB();
 
         Integer vkId = null;
         try {
             vkId = Integer.parseInt(vk_id);
         } catch (NumberFormatException e){
+            System.out.println("Ошибка при парсинге");
+            e.printStackTrace();
             return false;
         }
 
@@ -78,9 +87,32 @@ public class DataBase {
             newSex = 0;
         }
 
-        Boolean mailingAgreement = Boolean.getBoolean(mailing_agreement);
-        return false;
+        boolean mailingAgreement = Boolean.getBoolean(mailing_agreement);
 
+        System.out.println("ReadyToInsert");
+
+        return insertNewUser(
+                vkId,
+                surname,
+                first_name,
+                second_name,
+                birthday,
+                newSex,
+                email,
+                phone,
+                occupation,
+                langs,
+                volunteer_experience,
+                children_work_experience,
+                skills,
+                expectations,
+                medical_contraindications,
+                specialty,
+                food_preferences,
+                clothes_size,
+                information_source,
+                mailingAgreement
+        );
     }
 
     public static boolean addNewEvent(
@@ -119,7 +151,7 @@ public class DataBase {
 
     }
 
-    private Boolean insertNewUser(
+    private static Boolean insertNewUser(
             int vk_id,
             String surname,
             String first_name,
@@ -143,26 +175,27 @@ public class DataBase {
 
     ){
         PreparedStatement preparedStatement = getPreparedStatement(SQL.insertNewVolunteer);
-        prepareString(preparedStatement, surname, 1);
-        prepareString(preparedStatement, first_name, 2);
-        prepareString(preparedStatement, second_name, 3);
-        prepareString(preparedStatement, birthday, 4);
-        prepareInt(preparedStatement, sex, 5);
-        prepareDouble(preparedStatement, null, 6);
-        prepareString(preparedStatement, email, 7);
-        prepareString(preparedStatement, phone, 8);
-        prepareString(preparedStatement, occupation, 9);
-        prepareString(preparedStatement, langs, 10);
-        prepareString(preparedStatement, volunteer_experience, 11);
-        prepareString(preparedStatement, children_work_experience, 12);
-        prepareString(preparedStatement, skills, 13);
-        prepareString(preparedStatement, expectations, 14);
-        prepareString(preparedStatement, medical_contraindications, 15);
-        prepareString(preparedStatement, specialty, 16);
-        prepareString(preparedStatement, food_preferences, 17);
-        prepareString(preparedStatement, clothes_size, 18);
-        prepareString(preparedStatement, information_source, 19);
-        prepareString(preparedStatement, email, 20);
+        prepareInt(preparedStatement, vk_id, 1);
+        prepareString(preparedStatement, surname, 2);
+        prepareString(preparedStatement, first_name, 3);
+        prepareString(preparedStatement, second_name, 4);
+        prepareString(preparedStatement, birthday, 5);
+        prepareInt(preparedStatement, sex, 6);
+        prepareDouble(preparedStatement, -1.0, 7);
+        prepareDouble(preparedStatement, -1.0, 7);
+        prepareString(preparedStatement, email, 8);
+        prepareString(preparedStatement, phone, 9);
+        prepareString(preparedStatement, occupation, 10);
+        prepareString(preparedStatement, langs, 11);
+        prepareString(preparedStatement, volunteer_experience, 12);
+        prepareString(preparedStatement, children_work_experience, 13);
+        prepareString(preparedStatement, skills, 14);
+        prepareString(preparedStatement, expectations, 15);
+        prepareString(preparedStatement, medical_contraindications, 16);
+        prepareString(preparedStatement, specialty, 17);
+        prepareString(preparedStatement, food_preferences, 18);
+        prepareString(preparedStatement, clothes_size, 19);
+        prepareString(preparedStatement, information_source, 20);
         prepareBool(preparedStatement, mailing_agreement, 21);
 
         return insertContent(preparedStatement);
@@ -191,7 +224,7 @@ public class DataBase {
         return true;
     }
 
-    private boolean insertContent(PreparedStatement preparedStatement){
+    private static boolean insertContent(PreparedStatement preparedStatement){
         try {
             preparedStatement.executeUpdate();
             return true;
@@ -205,7 +238,7 @@ public class DataBase {
         }
     }
 
-    private PreparedStatement getPreparedStatement(String query){
+    private static PreparedStatement getPreparedStatement(String query){
         try {
             return connection.prepareStatement(query);
         } catch (SQLException e) {
@@ -215,8 +248,10 @@ public class DataBase {
         }
     }
 
-    private void prepareString(PreparedStatement preparedStatement, String content, int contentIndex){
+    private static void prepareString(PreparedStatement preparedStatement, String content, int contentIndex){
         try {
+            if (content == null)
+                content = "";
             preparedStatement.setString(contentIndex, content);
         } catch (SQLException e) {
             System.out.println("In query string \"" + content + "\" error");
@@ -227,8 +262,10 @@ public class DataBase {
         }
     }
 
-    private void prepareBool(PreparedStatement preparedStatement, Boolean content, int contentIndex){
+    private static void prepareBool(PreparedStatement preparedStatement, Boolean content, int contentIndex){
         try {
+            if (content == null)
+                content = false;
             preparedStatement.setBoolean(contentIndex, content);
         } catch (SQLException e) {
             System.out.println("In query string \"" + content + "\" error");
@@ -239,8 +276,10 @@ public class DataBase {
         }
     }
 
-    private void prepareInt(PreparedStatement preparedStatement, int content, int contentIndex){
+    private static void prepareInt(PreparedStatement preparedStatement, Integer content, int contentIndex){
         try {
+            if (content == null)
+                content = -1;
             preparedStatement.setInt(contentIndex, content);
         } catch (SQLException e) {
             System.out.println("In query int \"" + content + "\" error");
@@ -251,8 +290,10 @@ public class DataBase {
         }
     }
 
-    private void prepareDouble(PreparedStatement preparedStatement, Double content, int contentIndex){
+    private static void prepareDouble(PreparedStatement preparedStatement, Double content, int contentIndex){
         try {
+            if (content == null)
+                content = -1.0;
             preparedStatement.setDouble(contentIndex, content);
         } catch (SQLException e) {
             System.out.println("In query int \"" + content + "\" error");
@@ -263,7 +304,7 @@ public class DataBase {
         }
     }
 
-    private void prepareDate(PreparedStatement preparedStatement, Date content, int contentIndex){
+    private static void prepareDate(PreparedStatement preparedStatement, Date content, int contentIndex){
         try {
             preparedStatement.setDate(contentIndex, content);
         } catch (SQLException e) {
@@ -277,7 +318,7 @@ public class DataBase {
 
     public void closeConnection(){
         try { connection.close(); } catch(SQLException se) { /*can't do anything */ }
-        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
+//        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
     }
 
 //    private static

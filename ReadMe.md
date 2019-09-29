@@ -10,7 +10,7 @@
 #### Return
 `{ user_rating : "4.5" }`
 
-### GET: /api/user/Profile/
+### GET: /api/user/getProfile/
 #### Params:
 **auth**: token
 **user_id**: user_vk_id
@@ -40,7 +40,7 @@
     "mailing_agreement":"true"
 }`
 
-### POST: /api/user/Profile/
+### GET: /api/user/setProfile/
 #### Params:
 **auth**: token
 **vk_id**: "123123"
