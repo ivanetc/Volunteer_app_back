@@ -109,12 +109,33 @@ public class DataBase {
         }
 
         String[] t_periods = time_periods.split("$");
-        Map<String,String> map = new HashMap<>();
         for(String pair : t_periods)
         {
             String[] entry = pair.split("%");
-            map.put(entry[0].trim(), entry[1].trim());
+            Integer people_count = null;
+            /*try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                people_count = Integer.parseInt(entry[1].trim());
+
+
+                    if (generatedKeys.next()) {
+                        user.setId(generatedKeys.getLong(1));
+                    }
+                    else {
+                        throw new SQLException("Creating user failed, no ID obtained.");
+                    }
+
+
+                insertNewTimeInterval(, entry[0].trim(), people_count);
+            } catch (NumberFormatException e){
+                return false;
+            }*/
         }
+        //    private Boolean insertNewTimeInterval(
+        //            int event_id,
+        //            String time_period,
+        //            int people_count
+        //    )
+
         return false;
 
     }
@@ -179,17 +200,49 @@ public class DataBase {
             String place
     ) {
         PreparedStatement preparedStatement = getPreparedStatement(SQL.insertNewEvent);
-
         prepareInt(preparedStatement, vk_id, 1);
         prepareString(preparedStatement, name, 2);
         prepareString(preparedStatement, description, 3);
-        //prepareDate(preparedStatement, date, 4);
+
+        String[] dateList = date.split(".");
+        String year = "1970";
+        String month = "01";
+        String day = "01";
+        if (dateList.length == 3) {
+            if (dateList[2].length() == 4)
+                year = dateList[2];
+            if (dateList[1].length() == 2)
+                month = dateList[1];
+            else if (dateList[1].length() == 1)
+                month = String.format("0%s", dateList[1]);
+            if (dateList[0].length() == 2)
+                day = dateList[0];
+            else if (dateList[0].length() == 1)
+                day = String.format("0%s", dateList[1]);
+        }
+        String dateString = String.format("%s-%s-%s", year, month, day);
+        prepareDate(preparedStatement, java.sql.Date.valueOf(dateString), 4);
+
         prepareString(preparedStatement, volunteers_task, 5);
         prepareString(preparedStatement, volunteer_requirements, 6);
         prepareString(preparedStatement, place, 7);
 
-        return true;
+        return insertContent(preparedStatement);
     }
+
+    /*private static Boolean insertNewTimeInterval(
+            int event_id,
+            String time_period,
+            int people_count
+    ) {
+        PreparedStatement preparedStatement = getPreparedStatement(SQL.insertNewTimeInterval);
+
+        prepareInt(preparedStatement, event_id, 1);
+        prepareString(preparedStatement, time_period, 2);
+        prepareInt(preparedStatement, people_count, 3);
+
+        return insertContent(preparedStatement);
+    }*/
 
     private boolean insertContent(PreparedStatement preparedStatement){
         try {

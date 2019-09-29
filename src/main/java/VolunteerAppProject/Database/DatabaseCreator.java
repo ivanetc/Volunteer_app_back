@@ -54,6 +54,18 @@ public class DatabaseCreator {
             "    place TEXT" +
             ")";
 
+    private static final String createVolunteersToEventsTable = "CREATE TABLE VolunteersToEvents (\n" +
+            "    event_volunteer_id INT primary key AUTO_INCREMENT,\n" +
+            "    FOREIGN KEY (event_id)  REFERENCES Event (event_id),\n" +
+            "    FOREIGN KEY (volunteer_id)  REFERENCES Volunteer (user_id)" +
+            ")";
+
+    private static final String createTimeIntervalsToEvents = "CREATE TABLE TimeIntervalsToEvents (\n" +
+            "    time_event_id INT primary key AUTO_INCREMENT,\n" +
+            "    FOREIGN KEY (event_id)  REFERENCES Event (event_id),\n" +
+            "    FOREIGN KEY (time_interval_id)  REFERENCES TimePeriodsTable (time_period_id)" +
+            ")";
+
     private static final String createTimeIntervalsTable = "CREATE TABLE TimePeriodsTable (\n" +
             "    time_period_id INT primary key AUTO_INCREMENT,\n" +
             "    event_id INT NOT NULL,\n" +
