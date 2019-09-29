@@ -90,8 +90,6 @@ public class DataBase {
 
         boolean mailingAgreement = Boolean.getBoolean(mailing_agreement);
 
-        System.out.println("ReadyToInsert");
-
         return insertNewUser(
                 vkId,
                 surname,
@@ -128,33 +126,42 @@ public class DataBase {
             String place,
             String time_periods
     ) {
+
+        System.out.println("TP: " + time_periods);
+
+        connectDB();
         Integer vkId = null;
         try {
             vkId = Integer.parseInt(vk_id);
         } catch (NumberFormatException e){
-            return false;
+            System.out.println("vkId null");
+            vkId = 0;
         }
 
         Integer userVkId = null;
         try {
             userVkId = Integer.parseInt(user_vk_id);
         } catch (NumberFormatException e){
-            return false;
+            System.out.println("userVkIdNull");
+            userVkId = 0;
         }
 
         PreparedStatement curPreparedStatement = insertNewEvent(
                 userVkId, vkId, name, description, date, volunteers_task, volunteer_requirements, place
         );
 
-
         try (ResultSet generatedKeys = curPreparedStatement.getGeneratedKeys()) {
 
-            if (generatedKeys.next()){
+            if (generatedKeys != null && generatedKeys.next()){
                 int currentKey = generatedKeys.getInt(1);
 
-                String[] t_periods = time_periods.split("$");
+                System.out.println("CK " + currentKey);
+
+                String[] t_periods = time_periods.split("\\$");
 
                 for (String pair : t_periods) {
+
+                    System.out.println(pair);
                     String[] entry = pair.split("%");
                     Integer people_count = null;
                     String time_period = "";
@@ -168,11 +175,8 @@ public class DataBase {
                     }
 
                     insertNewTimeInterval(currentKey, time_period, people_count);
-
                 }
             }
-        } catch (NumberFormatException e){
-            return false;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -198,26 +202,30 @@ public class DataBase {
         prepareString(preparedStatement, name, 3);
         prepareString(preparedStatement, description, 4);
 
-        String[] dateList = date.split(".");
         String year = "1970";
         String month = "01";
         String day = "01";
-        if (dateList.length == 3) {
-            if (dateList[2].length() == 4)
-                year = dateList[2];
-            if (dateList[1].length() == 2)
-                month = dateList[1];
-            else if (dateList[1].length() == 1)
-                month = String.format("0%s", dateList[1]);
-            if (dateList[0].length() == 2)
-                day = dateList[0];
-            else if (dateList[0].length() == 1)
-                day = String.format("0%s", dateList[1]);
+
+        if (date != null)
+        {
+            String[] dateList = date.split("\\.");
+
+            if (dateList.length == 3) {
+                if (dateList[2].length() == 4)
+                    year = dateList[2];
+                if (dateList[1].length() == 2)
+                    month = dateList[1];
+                else if (dateList[1].length() == 1)
+                    month = String.format("0%s", dateList[1]);
+                if (dateList[0].length() == 2)
+                    day = dateList[0];
+                else if (dateList[0].length() == 1)
+                    day = String.format("0%s", dateList[1]);
+            }
         }
 
         String dateString = String.format("%s-%s-%s", year, month, day);
         prepareDate(preparedStatement, java.sql.Date.valueOf(dateString), 5);
-
         prepareString(preparedStatement, volunteers_task, 6);
         prepareString(preparedStatement, volunteer_requirements, 7);
         prepareString(preparedStatement, place, 8);
@@ -260,21 +268,20 @@ public class DataBase {
         prepareString(preparedStatement, birthday, 6);
         prepareInt(preparedStatement, sex, 7);
         prepareDouble(preparedStatement, -1.0, 8);
-        prepareDouble(preparedStatement, -1.0, 9);
-        prepareString(preparedStatement, email, 10);
-        prepareString(preparedStatement, phone, 11);
-        prepareString(preparedStatement, occupation, 12);
-        prepareString(preparedStatement, langs, 13);
-        prepareString(preparedStatement, volunteer_experience, 14);
-        prepareString(preparedStatement, children_work_experience, 15);
-        prepareString(preparedStatement, skills, 16);
-        prepareString(preparedStatement, expectations, 17);
-        prepareString(preparedStatement, medical_contraindications, 18);
-        prepareString(preparedStatement, specialty, 19);
-        prepareString(preparedStatement, food_preferences, 20);
-        prepareString(preparedStatement, clothes_size, 21);
-        prepareString(preparedStatement, information_source, 22);
-        prepareBool(preparedStatement, mailing_agreement, 23);
+        prepareString(preparedStatement, email, 9);
+        prepareString(preparedStatement, phone, 10);
+        prepareString(preparedStatement, occupation, 11);
+        prepareString(preparedStatement, langs, 12);
+        prepareString(preparedStatement, volunteer_experience, 13);
+        prepareString(preparedStatement, children_work_experience, 14);
+        prepareString(preparedStatement, skills, 15);
+        prepareString(preparedStatement, expectations, 16);
+        prepareString(preparedStatement, medical_contraindications, 17);
+        prepareString(preparedStatement, specialty, 18);
+        prepareString(preparedStatement, food_preferences, 19);
+        prepareString(preparedStatement, clothes_size, 20);
+        prepareString(preparedStatement, information_source, 21);
+        prepareBool(preparedStatement, mailing_agreement, 22);
 
         return insertContent(preparedStatement);
     }
@@ -310,7 +317,7 @@ public class DataBase {
 
     private static PreparedStatement getPreparedStatement(String query){
         try {
-            return connection.prepareStatement(query);
+            return connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
             System.out.println("Unable to create preparedStatement");
             e.printStackTrace();

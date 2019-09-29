@@ -34,6 +34,8 @@ public class CreateEventServlet extends HttpServlet {
         String authToken = request.getParameter("auth");
         String responseString = "";
 
+        System.out.println(request.toString());
+
         if (authToken != null && authToken.equals(ServerStarter.token())){
             Boolean success = DataBase.addNewEvent(
                     request.getParameter("user_vk_id"),
