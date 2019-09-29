@@ -16,8 +16,6 @@ public class DatabaseCreator {
     private static Connection connection;
     private static Statement stmt;
 
-
-
     private static final String createVolunteersTable = "CREATE TABLE Volunteer (\n" +
             "    user_id INT primary key AUTO_INCREMENT,\n" +
             "    vk_id INT NOT NULL,\n" +
