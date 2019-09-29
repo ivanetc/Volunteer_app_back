@@ -2,6 +2,8 @@ package VolunteerAppProject.Bot;
 
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.GroupActor;
+import com.vk.api.sdk.exceptions.ApiException;
+import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
 import org.eclipse.jetty.server.Server;
 
@@ -23,8 +25,20 @@ public class BotController {
         botBroadcastController = new BotBroadcastController(apiClient, actor);
     }
 
-    public void broadcast(Integer[] ids, String message) {
-        botBroadcastController.broadcast(ids, message);
+    public void broadcast(String message) {
+        Integer[] ids;
+        try {
+            System.out.println("lol");
+            ids = (Integer[]) apiClient.groups().getMembers(actor).groupId("bot_sputnik").execute().getItems().toArray();
+            System.out.println("kek");
+            for (Integer i : ids) {
+                System.out.println(i);
+            }
+            botBroadcastController.broadcast(ids, message);
+        } catch (ApiException | ClientException e) {
+            System.out.println("err");
+            e.printStackTrace();
+        }
     }
 
     public void startBotServer() throws Exception {

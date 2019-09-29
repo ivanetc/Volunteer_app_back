@@ -2,6 +2,7 @@ package VolunteerAppProject;
 
 import VolunteerAppProject.Bot.BotController;
 import VolunteerAppProject.Servlets.Events.*;
+import VolunteerAppProject.Servlets.Tasks.CreateTaskServlet;
 import VolunteerAppProject.Servlets.User.*;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -17,6 +18,11 @@ import java.util.Properties;
 public class ServerStarter {
 
     private static Properties properties;
+    private static BotController botController;
+
+    public static BotController getBotController() {
+        return botController;
+    }
 
     public static String token() {
         return properties.getProperty("apiToken");
@@ -36,14 +42,14 @@ public class ServerStarter {
     public static void main(String[] args) throws FileNotFoundException {
         properties = readProperties();
 
-        startApiServer();
-
-        BotController botController = new BotController(properties);
+        botController = new BotController(properties);
         try {
             botController.startBotServer();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        startApiServer();
     }
 
     private static void startApiServer() {
@@ -105,6 +111,7 @@ public class ServerStarter {
         serverHandler.addServlet(GetEventServlet.class, "/api/events/getEvent");
         serverHandler.addServlet(CreateEventServlet.class, "/api/events/createEvent");
         serverHandler.addServlet(GetMyOrgEventsServlet.class, "/api/events/getMyOrgEvents");
+        serverHandler.addServlet(CreateTaskServlet.class, "/api/tasks/create");
     }
 
     public static String getAccessDeniedResponce() {
