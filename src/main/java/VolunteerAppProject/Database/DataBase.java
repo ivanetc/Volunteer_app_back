@@ -3,6 +3,8 @@ package VolunteerAppProject.Database;
 import VolunteerAppProject.ServerStarter;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class DataBase {
@@ -81,6 +83,42 @@ public class DataBase {
 
     }
 
+    public static boolean addNewEvent(
+            String user_vk_id,
+            String vk_id,
+            String name,
+            String description,
+            String date,
+            String volunteers_task,
+            String volunteer_requirements,
+            String place,
+            String time_periods
+    ) {
+        Integer vkId = null;
+        try {
+            vkId = Integer.parseInt(vk_id);
+        } catch (NumberFormatException e){
+            return false;
+        }
+
+        Integer userVkId = null;
+        try {
+            userVkId = Integer.parseInt(user_vk_id);
+        } catch (NumberFormatException e){
+            return false;
+        }
+
+        String[] t_periods = time_periods.split("$");
+        Map<String,String> map = new HashMap<>();
+        for(String pair : t_periods)
+        {
+            String[] entry = pair.split("%");
+            map.put(entry[0].trim(), entry[1].trim());
+        }
+        return false;
+
+    }
+
     private Boolean insertNewUser(
             int vk_id,
             String surname,
@@ -128,6 +166,29 @@ public class DataBase {
         prepareBool(preparedStatement, mailing_agreement, 21);
 
         return insertContent(preparedStatement);
+    }
+
+    private Boolean insertNewEvent(
+            int user_vk_id,
+            int vk_id,
+            String name,
+            String description,
+            String date,
+            String volunteers_task,
+            String volunteer_requirements,
+            String place
+    ) {
+        PreparedStatement preparedStatement = getPreparedStatement(SQL.insertNewEvent);
+
+        prepareInt(preparedStatement, vk_id, 1);
+        prepareString(preparedStatement, name, 2);
+        prepareString(preparedStatement, description, 3);
+        //prepareDate(preparedStatement, date, 4);
+        prepareString(preparedStatement, volunteers_task, 5);
+        prepareString(preparedStatement, volunteer_requirements, 6);
+        prepareString(preparedStatement, place, 7);
+
+        return true;
     }
 
     private boolean insertContent(PreparedStatement preparedStatement){
