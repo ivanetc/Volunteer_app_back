@@ -70,6 +70,17 @@
 
 
 
+### GET: api/user/getUserStatus
+#### Params:
+**auth**: token
+**vk_id**: "1"
+
+
+#### Return
+`    
+ {"user_status" : "1"}
+`
+
 
 ### GET: /api/user/setRating
 #### Params:
